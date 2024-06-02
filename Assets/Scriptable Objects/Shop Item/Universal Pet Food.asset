@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75728db0a50eb6144b35ee055a5de30b, type: 3}
+  m_Name: Universal Pet Food
+  m_EditorClassIdentifier: 
+  type: 0
+  icon: {fileID: 21300000, guid: 0075be216da8a4dc5b1bd7fdeefe9941, type: 3}
+  iconBackgroundColor: {r: 0.8117647, g: 1, b: 0.8317028, a: 1}
+  displayName: Pet Food
+  itemEffects:
+  - statsType: 1
+    isPercentage: 0
+    value: 30
+  - statsType: 3
+    isPercentage: 0
+    value: 100
+  cost: 100
