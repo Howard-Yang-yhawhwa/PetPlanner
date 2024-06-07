@@ -21,6 +21,12 @@ public class TaskCreation : MonoBehaviour
     [SerializeField] SubtaskContent subtaskPrefab;
 
     [Header("Debug Info")]
+    [SerializeField] string inputTitle;
+    [SerializeField] string inputNotes;
+    [SerializeField] Priority inputPriority;
+    [SerializeField] float inputTimeValue;
+    [SerializeField] TimeUnits inputTimeUnits;
+    
     [SerializeField] Task CurrTempTask;
 
     bool isCreationMode;
@@ -47,7 +53,7 @@ public class TaskCreation : MonoBehaviour
     public void onNameInputChanged()
     {
         if (NameInput.text.Length <= 0) return;
-        TasksManager.TempTask.title = NameInput.text;
+        inputTitle = NameInput.text;
     }
 
     public void onNotesInputChanged()
@@ -69,6 +75,8 @@ public class TaskCreation : MonoBehaviour
 
     public void OnSaveButtonClicked()
     {
+        TasksManager.TempTask.title = inputTitle;
+
         if (isCreationMode)
         {
             TasksManager.AddTask(TasksManager.TempTask.ID, TasksManager.TempTask);

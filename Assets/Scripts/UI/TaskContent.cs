@@ -6,14 +6,14 @@ using TMPro;
 
 public class TaskContent : MonoBehaviour
 {
-    [Header("References")]
+    [Header("=== References ===")]
     [SerializeField] TMP_Text titleText;
     [SerializeField] TMP_Text bountyText;
     [SerializeField] Image backgroundImage;
     [SerializeField] Toggle toggle;
     [SerializeField] Button editButton;
 
-    [Header("Settings")]
+    [Header("=== Settings ===")]
     [SerializeField] Color todoColor;
     [SerializeField] Color doneColor;
 
@@ -76,5 +76,18 @@ public class TaskContent : MonoBehaviour
     {
         Debug.Log($"Edit Button pressed for {TasksManager.TaskList[MyTaskID].title}!");
         EventBus.Publish(new SetEditTaskEvent(MyTaskID));
+    }
+
+    public void DeleteTask()
+    {
+        if (!TasksManager.TaskList.ContainsKey(MyTaskID))
+        {
+            Debug.Log($"Error: Trying to delete a task ID ({MyTaskID}) that does not exist!");
+            return;
+        }
+
+        TasksManager.TaskList.Remove(MyTaskID);
+        EventBus.Publish(new UpdateTaskList());
+        Destroy(gameObject);
     }
 }
