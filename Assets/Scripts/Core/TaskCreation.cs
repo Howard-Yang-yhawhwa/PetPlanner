@@ -7,9 +7,9 @@ using TMPro;
 public class TaskCreation : MonoBehaviour
 {
     [SerializeField] GameObject CreationUI;
+    [SerializeField] TMP_Text TitleText;
     [SerializeField] TMP_InputField NameInput;
     [SerializeField] TMP_InputField NotesInput;
-    //[SerializeField] TMP_Dropdown PriorityDropdown;
     [SerializeField] TMP_InputField EWTValueInput;
     [SerializeField] TMP_Dropdown EWTUnitsDropdown;
     [SerializeField] Toggle[] PriorityToggles;
@@ -26,15 +26,12 @@ public class TaskCreation : MonoBehaviour
     bool isCreationMode;
 
     Subscription<SubtasksUpdateEvent> subtask_update_event;
+    Subscription<SetEditTaskEvent> edit_task_event;
 
     private void Awake()
     {
         subtask_update_event = EventBus.Subscribe<SubtasksUpdateEvent>(OnSubtaskUpdate);
-    }
-
-    private void Start()
-    {
-        TasksManager.TempTask = new Task();
+        edit_task_event = EventBus.Subscribe<SetEditTaskEvent>(OnEditTaskEvent);
     }
 
     private void Update()
@@ -80,6 +77,8 @@ public class TaskCreation : MonoBehaviour
         {
             TasksManager.TaskList[TasksManager.TempTask.ID] = TasksManager.TempTask;
         }
+
+        EventBus.Publish(new UpdateTaskList());
         
         CreationUI.SetActive(false);
     }
@@ -127,6 +126,7 @@ public class TaskCreation : MonoBehaviour
     public void OpenCreationMode()
     {
         isCreationMode = true;
+        TitleText.text = "CREATE TASK";
         string ID = RandomUtils.GenerateNumericCode(10);
         TasksManager.TempTask = new Task();
         TasksManager.TempTask.ID = ID;
@@ -169,5 +169,50 @@ public class TaskCreation : MonoBehaviour
     void OnSubtaskUpdate(SubtasksUpdateEvent e)
     {
         UpdateSubtaskProgressDisplay();
+    }
+
+    void OnEditTaskEvent(SetEditTaskEvent e)
+    {
+        isCreationMode = false;
+
+        TitleText.text = "VIEW & EDIT TASK";
+
+        TasksManager.TempTask = TasksManager.TaskList[e.taskID];
+
+        NameInput.text = TasksManager.TempTask.title;
+        NotesInput.text = TasksManager.TempTask.notes;
+
+
+        SubtaskInput.text = "";
+        SubtaskInput.onValueChanged.Invoke("");
+
+
+        foreach (Toggle toggle in PriorityToggles)
+        {
+            toggle.isOn = false;
+        }
+
+        PriorityToggles[(int) TasksManager.TempTask.priority].isOn = true;
+
+        EWTValueInput.text = TasksManager.TempTask.etdValue.ToString();
+        EWTUnitsDropdown.value = (int) TasksManager.TempTask.etdUnits;
+
+        foreach (Transform child in SubtaskContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int index = 0;
+        foreach (Subtask task in TasksManager.TempTask.Subtasks)
+        {
+            SubtaskContent subtaskClone = Instantiate(subtaskPrefab, SubtaskContainer);
+            subtaskClone.Setup(index);
+            if (task.isDone) subtaskClone.ShowDoneVisual();
+            index += 1;
+        }
+
+        UpdateSubtaskProgressDisplay();
+
+        CreationUI.SetActive(true);
     }
 }
