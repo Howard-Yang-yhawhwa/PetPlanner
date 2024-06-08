@@ -2147,8 +2147,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DELETE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b85b643605a2e4ccaba709195d463393, type: 2}
-  m_sharedMaterial: {fileID: 7801471545875461292, guid: b85b643605a2e4ccaba709195d463393,
+  m_fontAsset: {fileID: 11400000, guid: 99f233663eb3d48d6a74d4e0c613031c, type: 2}
+  m_sharedMaterial: {fileID: -2057558509806727645, guid: 99f233663eb3d48d6a74d4e0c613031c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
