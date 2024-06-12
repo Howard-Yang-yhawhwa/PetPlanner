@@ -21,12 +21,13 @@ public class PetSelectionContent : MonoBehaviour
     {
         this.parentUI = parentUI;
         currPetData = Player.OwnedPets[id];
-        nameText.text = $"{currPetData.Nickname} - {currPetData.ID}";
+        nameText.text = $"{currPetData.Nickname}";
     }
 
     public void OnButtonClicked()
     {
-        //parentUI.SetActive(false);
-        EventBus.Publish(new PetSelectionMadeEvent(currPetData.ID));
+        // parentUI.SetActive(false);
+        // EventBus.Publish(new PetSelectedEvent(currPetData.ID));
+        EventBus.Publish(new PetSelectedEvent(currPetData.ID));
     }
 }

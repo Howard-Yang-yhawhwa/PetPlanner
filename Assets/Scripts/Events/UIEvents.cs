@@ -3,3 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SubtasksUpdateEvent { }
+public class OpenEggDrawConfirmaationEvent
+{
+    public PetTypes selectedType;
+    public int cost;
+
+    public OpenEggDrawConfirmaationEvent(PetTypes selectedType, int cost)
+    {
+        this.selectedType = selectedType;
+        this.cost = cost;
+    }
+}
+
+public class OpenEditPetNameWindowEvent 
+{
+    public string petID;
+
+    public OpenEditPetNameWindowEvent(string petID)
+    {
+        this.petID = petID;
+    }
+}

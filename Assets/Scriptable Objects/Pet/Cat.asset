@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Cat
   Description: 
-  ViewPrefab: {fileID: 7480503385038418015, guid: 3caae7ab374a89d45a4e5ba909ebf3bb,
+  ViewPrefab: {fileID: 1034844629304111627, guid: 3140943fe59865544a622c4bb27280b2,
     type: 3}
   Type: 1
   Rarity: 0

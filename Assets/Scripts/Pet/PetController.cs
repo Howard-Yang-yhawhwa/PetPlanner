@@ -29,7 +29,7 @@ public class PetController : MonoBehaviour
     [SerializeField] float currentStateDuration;
     [SerializeField] GameObject viewObject;
 
-    NavMeshAgent agent;
+    // NavMeshAgent agent;
 
     public string ID
     {
@@ -45,15 +45,15 @@ public class PetController : MonoBehaviour
     PetViewController viewController;
     Rigidbody rigid;
 
-    Subscription<PetSelectionMadeEvent> selection_event;
+    Subscription<PetSelectedEvent> selection_event;
 
     private void Awake()
     {
         selected = false;
-        selection_event = EventBus.Subscribe<PetSelectionMadeEvent>(OnSelectionMade);
+        selection_event = EventBus.Subscribe<PetSelectedEvent>(OnSelectionMade);
     }
 
-    void OnSelectionMade(PetSelectionMadeEvent e)
+    void OnSelectionMade(PetSelectedEvent e)
     {
         if (e.petID != id) {
             selected = false;
@@ -61,7 +61,7 @@ public class PetController : MonoBehaviour
         }
 
         selected = true;
-        EventBus.Publish(new PetSelectedEvent(gameObject, e.petID));
+
         Debug.Log($"{gameObject.name} for pet {e.petID} SELECTED!");
     }
 
@@ -83,12 +83,11 @@ public class PetController : MonoBehaviour
         gameObject.name = $"{dataSO.Type} - {Player.OwnedPets[ID].Nickname} ({ID})";
 
         viewController = GetComponent<PetViewController>();
-        agent = GetComponent<NavMeshAgent>();
+        // agent = GetComponent<NavMeshAgent>();
 
         Debug.Log($"Data SO's view prefab: {dataSO.ViewPrefab}");
 
         viewObject = viewController.UpdateDisplay(dataSO.ViewPrefab);
-        viewObject.GetComponent<PetCamera>().Setup(ID);
 
         // TODO: Check last login time and update stats accordingly.
         // TODO: Add remaining update time to the next session when application exists (use pet data).
@@ -233,7 +232,7 @@ public class PetController : MonoBehaviour
     void Idling()
     {
 
-        agent.SetDestination(transform.position);
+        // agent.SetDestination(transform.position);
 
         if (timer > currentStateDuration)
         {

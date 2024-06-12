@@ -26,23 +26,12 @@ public class SetEditTaskEvent
 }
 public class UpdateTaskList { }
 
-public class PetSelectionMadeEvent
-{
-    public string petID;
-    public PetSelectionMadeEvent(string petID)
-    {
-        this.petID = petID;
-    }
-}
-
 public class PetSelectedEvent
 {
-    public GameObject petObject;
     public string petID;
 
-    public PetSelectedEvent(GameObject petObject, string petID)
+    public PetSelectedEvent(string petID)
     {
-        this.petObject = petObject;
         this.petID = petID;
     }
 }
@@ -58,4 +47,6 @@ public class PetStatsUpdateEvent
         this.petID = petID;
     }
 }
+
+public class PetSpawnedEvent { }
 

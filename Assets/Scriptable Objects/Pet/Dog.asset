@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Dog
   Description: 
-  ViewPrefab: {fileID: 6567623934142742336, guid: 097474883b58a4d44b81b995c49871fb,
+  ViewPrefab: {fileID: 2181385752272073091, guid: 7151b5baa6542f74c809ee505e77a3e0,
     type: 3}
   Type: 0
   Rarity: 0
