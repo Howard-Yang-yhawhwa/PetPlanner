@@ -8,6 +8,8 @@ public class PetDataSO : ScriptableObject
     [Header("=== Display Info ===")]
     public string DisplayName;
     [TextArea] public string Description;
+    public RenderTexture AnimatedIcon;
+    public Sprite DisplayIcon;
     public GameObject ViewPrefab;
 
     [Space(15)]

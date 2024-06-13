@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Solstice.Core;
 
-public enum PetTypes { dog, cat }
+public enum PetTypes {  
+                        amberhorn, boulder, breeze, cloudling, duskwind, meadow, splash, // Common
+                        blaze, candycorn, hypno, oddball, phantom, venomfang, // Uncommon
+                        dizzy, goblinfire, hellbound, pearl, rainbowhorn, // Rare
+                        doodle, reaper, valentine, weepy, // Epic
+                        fortune, inferno, unicorn, // Legend
+                        eclipse, eldritch, nightfury // Mythic
+                     }
 public enum PetStats { Health, Hunger, Happiness, Experience }
 public enum PetRarity { Common, Uncommon, Rare, Epic, Legend, Mythic }
 public enum PetState { Idling, Resting, Roaming, Eating, Celebrating, Death }

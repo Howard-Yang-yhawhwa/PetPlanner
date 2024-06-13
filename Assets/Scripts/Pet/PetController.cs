@@ -80,7 +80,7 @@ public class PetController : MonoBehaviour
         this.ID = ID;
         dataSO = PetManager.AvaliableSOs[Player.OwnedPets[ID].Type];
 
-        gameObject.name = $"{dataSO.Type} - {Player.OwnedPets[ID].Nickname} ({ID})";
+        gameObject.name = $"{dataSO.Rarity} - {dataSO.Type} - {Player.OwnedPets[ID].Nickname} ({ID})";
 
         viewController = GetComponent<PetViewController>();
         // agent = GetComponent<NavMeshAgent>();

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57692f2eb81f4004787c1c99c8dfc571, type: 3}
+  m_Name: Splash
+  m_EditorClassIdentifier: 
+  DisplayName: Cat
+  Description: 
+  AnimatedIcon: {fileID: 8400000, guid: 5baa0ef00f539c740a4be15a33634c07, type: 2}
+  DisplayIcon: {fileID: 21300000, guid: 26f6e446de3713c4bb4e64a99ad18324, type: 3}
+  ViewPrefab: {fileID: 5205320739183875201, guid: f9a062521a684b84ca1179c0a24985f9,
+    type: 3}
+  Type: 6
+  Rarity: 0
+  MaxHealth: 100
+  MaxHealthReductionDuration: 907200
+  MaxHunger: 500
+  MaxHungerReductionDuration: 43200
+  MaxHappiness: 200
+  MaxHappinessReductionDuration: 86400
+  HappinessDRF: 1
+  HappinessNRF: 0.2
