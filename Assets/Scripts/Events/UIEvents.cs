@@ -24,3 +24,13 @@ public class OpenEditPetNameWindowEvent
         this.petID = petID;
     }
 }
+
+public class OpenDrawPetResultEvent
+{
+    public string petID;
+
+    public OpenDrawPetResultEvent(string petID)
+    {
+        this.petID = petID;
+    }
+}

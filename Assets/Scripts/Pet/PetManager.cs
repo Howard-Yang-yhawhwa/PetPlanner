@@ -8,11 +8,11 @@ public enum PetTypes {
                         blaze, candycorn, hypno, oddball, phantom, venomfang, // Uncommon
                         dizzy, goblinfire, hellbound, pearl, rainbowhorn, // Rare
                         doodle, reaper, valentine, weepy, // Epic
-                        fortune, inferno, unicorn, // Legend
+                        fortune, inferno, unicorn, // Legendary
                         eclipse, eldritch, nightfury // Mythic
                      }
 public enum PetStats { Health, Hunger, Happiness, Experience }
-public enum PetRarity { Common, Uncommon, Rare, Epic, Legend, Mythic }
+public enum PetRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 public enum PetState { Idling, Resting, Roaming, Eating, Celebrating, Death }
 
 public class PetManager : MonoBehaviour

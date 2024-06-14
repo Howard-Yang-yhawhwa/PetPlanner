@@ -50,9 +50,9 @@ public class LuckEggDraw : MonoBehaviour
             return;
         }
 
-        if (rand < LegendProbability && petOptions.ContainsKey(PetRarity.Legend))
+        if (rand < LegendProbability && petOptions.ContainsKey(PetRarity.Legendary))
         {
-            selectedType = DrawPet(PetRarity.Legend);
+            selectedType = DrawPet(PetRarity.Legendary);
             EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }

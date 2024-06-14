@@ -17,7 +17,6 @@ public class EggDrawConfirmationHandler : MonoBehaviour
     private void Awake()
     {
         egg_draw_event = EventBus.Subscribe<OpenEggDrawConfirmaationEvent>(OnEggDrawEvent);
-        popupManager.Close();
     }
 
     void OnEggDrawEvent(OpenEggDrawConfirmaationEvent e)
@@ -39,9 +38,9 @@ public class EggDrawConfirmationHandler : MonoBehaviour
     {
         Player.Currency -= cost;
         string newPetID = PetSpawner.SpawnNewPet(selectedType);
-
-        // Open name change panel with event bus
-        EventBus.Publish(new OpenEditPetNameWindowEvent(newPetID));
+        
+        // Open the egg draw result display
+        EventBus.Publish(new OpenDrawPetResultEvent(newPetID));
 
         // TODO: Show lucky egg draw animation
         // TODO: Show naming panel after the egg draw animation

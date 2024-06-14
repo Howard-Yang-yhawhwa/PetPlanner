@@ -21,6 +21,7 @@ public class PetNameEditor : MonoBehaviour
     public void InitAndOpen(string petID)
     {
         targetPetID = petID;
+        nameInput.text = "";
         popupManager.Open();
     }
 
