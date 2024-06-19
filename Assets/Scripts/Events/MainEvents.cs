@@ -50,3 +50,12 @@ public class PetStatsUpdateEvent
 
 public class PetSpawnedEvent { }
 
+public class SetCameraScaleEvent
+{
+    public float factor;
+
+    public SetCameraScaleEvent(float factor)
+    {
+        this.factor = factor;
+    }
+}

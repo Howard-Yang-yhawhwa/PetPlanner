@@ -35,4 +35,7 @@ public class PetDataSO : ScriptableObject
     [Tooltip("How long will happiness goes to zero (under no influence) in seconds.")] public float MaxHappinessReductionDuration;
     [Tooltip("Happiness day time reduction factor.")] public float HappinessDRF = 1f;
     [Tooltip("Happiness night time reduction factor.")] public float HappinessNRF = 0.2f;
+
+    [Header("- Experience & Levels -")]
+    public float MaxLevel = 100;
 }

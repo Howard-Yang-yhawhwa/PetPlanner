@@ -28,3 +28,4 @@ MonoBehaviour:
   MaxHappinessReductionDuration: 28800
   HappinessDRF: 1
   HappinessNRF: 0.2
+  MaxLevel: 20

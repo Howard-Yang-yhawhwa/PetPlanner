@@ -43,6 +43,7 @@ public class PetController : MonoBehaviour
 
     PetDataSO dataSO;
     PetViewController viewController;
+    PetAnimator petAnimator;
     Rigidbody rigid;
 
     Subscription<PetSelectedEvent> selection_event;
@@ -61,6 +62,7 @@ public class PetController : MonoBehaviour
         }
 
         selected = true;
+        viewController.UpdateDisplay(Player.OwnedPets[ID], false);
 
         Debug.Log($"{gameObject.name} for pet {e.petID} SELECTED!");
     }
@@ -71,6 +73,7 @@ public class PetController : MonoBehaviour
         timer = 0;
 
         rigid = GetComponent<Rigidbody>();
+        
     }
 
 
@@ -83,14 +86,13 @@ public class PetController : MonoBehaviour
         gameObject.name = $"{dataSO.Rarity} - {dataSO.Type} - {Player.OwnedPets[ID].Nickname} ({ID})";
 
         viewController = GetComponent<PetViewController>();
+        petAnimator = GetComponent<PetAnimator>();
         // agent = GetComponent<NavMeshAgent>();
 
         Debug.Log($"Data SO's view prefab: {dataSO.ViewPrefab}");
 
-        viewObject = viewController.UpdateDisplay(dataSO.ViewPrefab);
-
-        // TODO: Check last login time and update stats accordingly.
-        // TODO: Add remaining update time to the next session when application exists (use pet data).
+        viewObject = viewController.InitializeDisplay(dataSO.ViewPrefab);
+        petAnimator.SetupAniamtor(viewObject.GetComponent<Animator>());
 
         long currentTime = TimeUtils.GetTimestamp();
         Debug.Log($"Creation Time: {Player.OwnedPets[ID].CreationTime} | Last Login Time: {Player.LastLoginTime}");
@@ -249,6 +251,56 @@ public class PetController : MonoBehaviour
             timer = 0;
             SwitchState(PetState.Idling);
         }
+    }
+
+    public void FeedPet(float foodValue)
+    {
+        petAnimator.PlayEatingAnimation();
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+
+        tempList[ID].CurrentHunger += foodValue;
+        tempList[ID].CurrentHunger = Mathf.Min(dataSO.MaxHunger, tempList[ID].CurrentHunger);
+
+        Player.OwnedPets = tempList;
+    }
+
+    public void PlayWithPet(float happinessValue)
+    {
+        petAnimator.PlayCheeringAnimation();
+        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+
+        tempList[ID].CurrentHappiness += happinessValue;
+        tempList[ID].CurrentHappiness = Mathf.Min(dataSO.MaxHappiness, tempList[ID].CurrentHappiness);
+
+        Player.OwnedPets = tempList;
+    }
+
+    public void HealPet(float healthValue)
+    {
+        petAnimator.PlayCheeringAnimation();
+        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+
+        tempList[ID].CurrentHealth += healthValue;
+        tempList[ID].CurrentHealth = Mathf.Min(dataSO.MaxHealth, tempList[ID].CurrentHealth);
+
+        Player.OwnedPets = tempList;
+    }
+
+    public void GainExperience(float experienceValue)
+    {
+        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+
+        tempList[ID].CurrentExperience += experienceValue;
+        if (tempList[ID].CurrentExperience >= PetManager.GetMaxExp(tempList[ID].Level))
+        {
+            viewController.UpdateDisplay(Player.OwnedPets[ID], true);
+            tempList[ID].Level += 1;
+        }
+
+        Player.OwnedPets = tempList;
     }
 }
 

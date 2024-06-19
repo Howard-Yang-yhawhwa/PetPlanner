@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Solstice.Core;
+using Unity.VisualScripting;
 
 public enum PetTypes {  
                         amberhorn, boulder, breeze, cloudling, duskwind, meadow, splash, // Common
@@ -24,9 +25,13 @@ public class PetManager : MonoBehaviour
     [Header("=== DEBUG INFO ===")]
     [SerializeField] bool DebugMode;
     [SerializeField] List<PetData> OwnedPetData;
+    [SerializeField] List<PetController> SpawnedPetList;
     [SerializeField] public string SelectedPetID = "None";
 
     public static Dictionary<PetTypes, PetDataSO> AvaliableSOs = new Dictionary<PetTypes, PetDataSO>();
+    public static Dictionary<string, PetController> SpawnedPets = new Dictionary<string, PetController>();
+
+    static int[] maxExpMemo = new int[101];
 
     Subscription<PetSelectedEvent> selected_event;
 
@@ -50,6 +55,16 @@ public class PetManager : MonoBehaviour
         {
             AvaliableSOs.Add(so.Type, so);
         }
+
+
+        // Populate max experince needed for each level
+        maxExpMemo[0] = 1000;
+        maxExpMemo[1] = 1000;
+
+        for(int i = 2; i < maxExpMemo.Length; i ++)
+        {
+            maxExpMemo[i] = (int)(maxExpMemo[i - 1] * 1.25f);
+        }
     }
 
     public void Update()
@@ -63,6 +78,12 @@ public class PetManager : MonoBehaviour
                 PetData data = kvp.Value;
                 OwnedPetData.Add(data);
             }
+
+            SpawnedPetList.Clear();
+            foreach (var controller in SpawnedPets.Values)
+            {
+                SpawnedPetList.Add(controller);
+            }
         }
 
     }
@@ -74,7 +95,8 @@ public class PetManager : MonoBehaviour
 
     public static int GetMaxExp(int level)
     {
-        return 1000 * (int)Mathf.Pow(2, level - 1);
+        // return 1000 * (int)Mathf.Pow(2, level - 1);
+        return maxExpMemo[level];
     }
 
     public static PetData CreateData(PetTypes type)

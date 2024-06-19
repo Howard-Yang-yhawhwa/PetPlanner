@@ -88,5 +88,12 @@ public class LuckEggDraw : MonoBehaviour
         // Print the number of pets in the rarity
         Debug.Log($"Number of pets in {rarity}: {petOptions[rarity].Count}");
         return petOptions[rarity][Random.Range(0, petOptions[rarity].Count)];
+
+        // TODO: To make sure player draw more different variation of pet, we will randomize a queue for each rarity
+        // and give the player the first pet in the queue whenever they draw the rarity.
+        // When we popped half of the queue, we will randomize the queue again.
+
+
     }
+    
 }

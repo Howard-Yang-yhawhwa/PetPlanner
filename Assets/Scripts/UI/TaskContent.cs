@@ -52,7 +52,7 @@ public class TaskContent : MonoBehaviour
     {
         if (e.taskRemovedID == ID)
         {
-            UpdateDisplay();
+            InitializeDisplay();
         }
     }
     */

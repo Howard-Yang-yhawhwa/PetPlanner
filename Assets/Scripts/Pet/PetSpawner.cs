@@ -60,6 +60,7 @@ public class PetSpawner : MonoBehaviour
         Player.OwnedPets = ownedPet;
 
         newPet.Initialize(newData.ID);
+        PetManager.SpawnedPets.Add(newData.ID, newPet);
 
         EventBus.Publish(new PetSpawnedEvent());
         EventBus.Publish(new PetSelectedEvent(newData.ID));
@@ -68,13 +69,16 @@ public class PetSpawner : MonoBehaviour
     }
 
 
-    public static void SpawnPet(string ID)
+    public static PetController SpawnPet(string ID)
     {
         PetController newPet = Instantiate(prefab, petContainer);
         newPet.transform.position = petContainer.transform.position;
         newPet.Initialize(ID);
 
         EventBus.Publish(new PetSpawnedEvent());
+        PetManager.SpawnedPets.Add(ID, newPet);
+
+        return newPet;
     }
     
     public static Vector3 RandomPointInBounds(Bounds bounds)
