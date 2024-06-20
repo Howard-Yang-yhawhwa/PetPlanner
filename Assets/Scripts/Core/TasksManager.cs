@@ -15,6 +15,15 @@ public class Task
     public TimeUnits etdUnits = TimeUnits.Hour;
     public float etdValue = 1f;
     public bool isDone = false;
+    public List<Subtask> Subtasks = new List<Subtask>();
+}
+
+[System.Serializable]
+public class Subtask
+{
+    public string parentID;
+    public string title = "New Subtask";
+    public bool isDone = false;
 }
 
 public class TasksManager : MonoBehaviour
@@ -32,6 +41,8 @@ public class TasksManager : MonoBehaviour
             EventBus.Publish(new UpdateTaskList());
         } 
     }
+
+    public static Task TempTask;
 
     static Dictionary<string, Task> taskList = new Dictionary<string, Task>();
 

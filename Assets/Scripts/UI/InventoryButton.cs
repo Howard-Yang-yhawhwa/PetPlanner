@@ -38,11 +38,14 @@ public class InventoryButton : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
-        Dictionary<string, PetData> tempList = Player.OwnedPets;
-        float val = 0;
-
         string currentPetID = PetManager.Instance.SelectedPetID;
+
+        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
+
+        PetData petData = Player.OwnedPets[currentPetID];
+        PetDataSO dataReference = PetManager.AvaliableSOs[petData.Type];
+        PetController petController = PetManager.SpawnedPets[currentPetID];
+        float val = 0;
 
         if (Player.Inventory[type] <= 0 || !Player.OwnedPets.ContainsKey(currentPetID))
         {
@@ -51,47 +54,38 @@ public class InventoryButton : MonoBehaviour
 
         foreach (var effects in dataSO.itemEffects)
         {
-            Debug.Log($"Adding effects + {effects.value}{effects.statsType}  to {tempList[currentPetID].Nickname}({tempList[currentPetID].ID})");
+            Debug.Log($"Adding effects + {effects.value}{effects.statsType}  to {petData.Nickname}({petData.ID})");
             if(effects.statsType == PetStats.Health)
             {
-                float maxHealth = PetManager.AvaliableSOs[tempList[currentPetID].Type].MaxHealth;
-                val = effects.isPercentage ? tempList[currentPetID].CurrentHealth * effects.value : effects.value;
-                tempList[currentPetID].CurrentHealth += val;
-                tempList[currentPetID].CurrentHealth = Mathf.Min(maxHealth, tempList[currentPetID].CurrentHealth);
+                float maxHealth = PetManager.AvaliableSOs[petData.Type].MaxHealth;
+                val = effects.isPercentage ? petData.CurrentHealth * effects.value : effects.value;
+                petController.HealPet(val);
             }
 
             if (effects.statsType == PetStats.Hunger)
             {
-                float maxHunger = PetManager.AvaliableSOs[tempList[currentPetID].Type].MaxHunger;
-                val = effects.isPercentage ? tempList[currentPetID].CurrentHunger * effects.value : effects.value;
-                tempList[currentPetID].CurrentHunger += val;
-                tempList[currentPetID].CurrentHunger = Mathf.Min(maxHunger, tempList[currentPetID].CurrentHunger);
+                float maxHunger = PetManager.AvaliableSOs[petData.Type].MaxHunger;
+                val = effects.isPercentage ? petData.CurrentHunger * effects.value : effects.value;
+                petController.FeedPet(val);
             }
 
             if (effects.statsType == PetStats.Happiness)
             {
-                float maxHappiness = PetManager.AvaliableSOs[tempList[currentPetID].Type].MaxHappiness;
-                val = effects.isPercentage ? tempList[currentPetID].CurrentHappiness * effects.value : effects.value;
-                tempList[currentPetID].CurrentHappiness += val;
-                tempList[currentPetID].CurrentHappiness = Mathf.Min(maxHappiness, tempList[currentPetID].CurrentHappiness);
+                float maxHappiness = PetManager.AvaliableSOs[petData.Type].MaxHappiness;
+                val = effects.isPercentage ? petData.CurrentHappiness * effects.value : effects.value;
+                petController.PlayWithPet(val);
             }
 
             if (effects.statsType == PetStats.Experience)
             {
-                val = effects.isPercentage ? tempList[currentPetID].CurrentExperience * effects.value : effects.value;
-
-                tempList[currentPetID].CurrentExperience += val;
-                if (tempList[currentPetID].CurrentExperience >= PetManager.GetMaxExp(tempList[currentPetID].Level))
-                {
-                    tempList[currentPetID].Level += 1;
-                }
+                val = effects.isPercentage ? petData.CurrentExperience * effects.value : effects.value;
+                petController.GainExperience(val);
             }
         }
 
         tempInventory[type] -= 1;
 
         Player.Inventory = tempInventory;
-        Player.OwnedPets = tempList;
 
         CheckDelete();
     }

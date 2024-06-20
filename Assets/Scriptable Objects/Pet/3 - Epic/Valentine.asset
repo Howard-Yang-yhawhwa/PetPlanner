@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57692f2eb81f4004787c1c99c8dfc571, type: 3}
+  m_Name: Valentine
+  m_EditorClassIdentifier: 
+  DisplayName: Dog
+  Description: 
+  AnimatedIcon: {fileID: 8400000, guid: bf289bcfe6262b34c82f577dc223ee7d, type: 2}
+  DisplayIcon: {fileID: 21300000, guid: 219aa0426b0d1b84b82c0e49dfbc4b59, type: 3}
+  ViewPrefab: {fileID: 6883909068267762127, guid: ec00c259f4c043645b37ae023bc65a84,
+    type: 3}
+  Type: 20
+  Rarity: 3
+  MaxHealth: 100
+  MaxHealthReductionDuration: 345600
+  MaxHunger: 200
+  MaxHungerReductionDuration: 43200
+  MaxHappiness: 500
+  MaxHappinessReductionDuration: 28800
+  HappinessDRF: 1
+  HappinessNRF: 0.2
+  MaxLevel: 20

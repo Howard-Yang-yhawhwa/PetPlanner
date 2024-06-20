@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57692f2eb81f4004787c1c99c8dfc571, type: 3}
+  m_Name: Duskwind
+  m_EditorClassIdentifier: 
+  DisplayName: Cat
+  Description: 
+  AnimatedIcon: {fileID: 8400000, guid: df9203150da079e4d917b3b18001097a, type: 2}
+  DisplayIcon: {fileID: 21300000, guid: 535d68ad06ff14a44aceb75a0084fcd6, type: 3}
+  ViewPrefab: {fileID: 2112031470838042077, guid: 2796ca58b5e5a0c49979bfe7ef1661c9,
+    type: 3}
+  Type: 4
+  Rarity: 0
+  MaxHealth: 100
+  MaxHealthReductionDuration: 907200
+  MaxHunger: 500
+  MaxHungerReductionDuration: 43200
+  MaxHappiness: 200
+  MaxHappinessReductionDuration: 86400
+  HappinessDRF: 1
+  HappinessNRF: 0.2
+  MaxLevel: 20

@@ -28,19 +28,17 @@ namespace Ricimi
         public void Open()
         {
             AddBackground();
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Close"))
-            {
-                animator.Play("Open");
-            }
+
+            if (animator == null) animator = GetComponent<Animator>();
+
+            animator.SetBool("Open", true);
         }
 
         public void Close()
         {
-            
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Open"))
-            {
-                animator.Play("Close");
-            }
+            if (animator == null) animator = GetComponent<Animator>();
+
+            animator.SetBool("Open", false);
 
             RemoveBackground();
         }

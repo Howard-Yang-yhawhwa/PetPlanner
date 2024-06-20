@@ -40,53 +40,60 @@ public class LuckEggDraw : MonoBehaviour
             return;
         }
 
-        Player.Currency -= Cost;
-
         float rand = Random.value;
         PetTypes selectedType = DrawPet(PetRarity.Common);
 
         if (rand < MythicProbability && petOptions.ContainsKey(PetRarity.Mythic))
         {
-            DrawPet(PetRarity.Mythic);
-            PetSpawner.SpawnPet(selectedType);
+            selectedType = DrawPet(PetRarity.Mythic);
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }
 
-        if (rand < LegendProbability && petOptions.ContainsKey(PetRarity.Legend))
+        if (rand < LegendProbability && petOptions.ContainsKey(PetRarity.Legendary))
         {
-            DrawPet(PetRarity.Legend);
-            PetSpawner.SpawnPet(selectedType);
+            selectedType = DrawPet(PetRarity.Legendary);
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }
 
         if (rand < EpicProbability && petOptions.ContainsKey(PetRarity.Epic))
         {
-            DrawPet(PetRarity.Epic);
-            PetSpawner.SpawnPet(selectedType);
+            selectedType = DrawPet(PetRarity.Epic);
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }
 
         if (rand < RareProbability && petOptions.ContainsKey(PetRarity.Rare))
         {
-            DrawPet(PetRarity.Rare);
-            PetSpawner.SpawnPet(selectedType);
+            selectedType = DrawPet(PetRarity.Rare);
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }
 
         if (rand < UncommonProbability && petOptions.ContainsKey(PetRarity.Uncommon))
         {
-            DrawPet(PetRarity.Uncommon);
-            PetSpawner.SpawnPet(selectedType);
+            selectedType = DrawPet(PetRarity.Uncommon);
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
             return;
         }
 
-        PetSpawner.SpawnPet(selectedType);
+        EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
         return;
 
     }
 
     PetTypes DrawPet(PetRarity rarity)
     {
+        // Print the number of pets in the rarity
+        Debug.Log($"Number of pets in {rarity}: {petOptions[rarity].Count}");
         return petOptions[rarity][Random.Range(0, petOptions[rarity].Count)];
+
+        // TODO: To make sure player draw more different variation of pet, we will randomize a queue for each rarity
+        // and give the player the first pet in the queue whenever they draw the rarity.
+        // When we popped half of the queue, we will randomize the queue again.
+
+
     }
+    
 }

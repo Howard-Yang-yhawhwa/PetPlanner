@@ -7,6 +7,7 @@ public class TaskListController : MonoBehaviour
     [SerializeField] GameObject taskCreationUI;
     [SerializeField] Transform contentContainer;
     [SerializeField] TaskContent contentPrefab;
+    [SerializeField] GameObject NoTaskHintUI;
 
     //Subscription<TodoListUpdatedEvent> todo_update_event;
     //Subscription<DoneListUpdatedEvent> done_update_event;
@@ -55,6 +56,10 @@ public class TaskListController : MonoBehaviour
             contentDictionary[ID].UpdateDisplay();
             
         }
+
+        // TODO: Add a cute animation to this
+        NoTaskHintUI.SetActive(TasksManager.TaskList.Count <= 0);
+
     }
 
     /*
