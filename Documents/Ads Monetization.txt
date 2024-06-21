@@ -1,0 +1,8 @@
+Organization Core ID: 33262078497911
+Game IDs
+* Apple: 5641999
+* Android: 5641998
+
+LevelPlay Service Account API Key
+* Key ID: 1b20ba46-8c0c-4978-a389-548c60176e8d
+* Secret Key: eJKoIPgz2c4KgVawYoeI040nuU588ApW
