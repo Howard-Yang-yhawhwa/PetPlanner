@@ -35,6 +35,7 @@ public class PetSelectionContent : MonoBehaviour
         iconImage.gameObject.SetActive(true);
         animatedIconImage.gameObject.SetActive(false);
 
+        /* This causes too much performance...
         // If animated icon is available, display it and hide the static icon
         if (PetManager.AvaliableSOs[currPetData.Type].AnimatedIcon != null)
         {
@@ -42,6 +43,7 @@ public class PetSelectionContent : MonoBehaviour
             iconImage.gameObject.SetActive(false);
             animatedIconImage.gameObject.SetActive(true);
         }
+        */
 
         foreach(Image background in iconBackgroundImage)
         {

@@ -1,0 +1,4 @@
+Only show raw images when it is needed. i.e. When we are showcasing which the result of an egg draw. We should just show it for the duration and disable it immediately after.
+Disable scene when in UI mode.
+Somehow bake scenery 3D models into the scene
+Remove tiny 3D models from the scene to save on performance

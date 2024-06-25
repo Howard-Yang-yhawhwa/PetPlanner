@@ -14,16 +14,30 @@ public class Player : MonoBehaviour
     [SerializeField] List<ShopItemTypes> InventoryTypes;
     [SerializeField] List<int> InventoryCount;
 
-    public static int Currency {
+    public static int Coins {
         get {
-            return currency;
+            return coins;
         }
         set {
-            EventBus.Publish(new CurrencyUpdateEvent(value, value - currency));
-            currency = value;
+            EventBus.Publish(new CurrencyUpdateEvent(CurrecyTypes.Gems, value, value - coins));
+            coins = value;
         }
     }
-    static int currency;
+    static int coins;
+
+    public static int Gems
+    {
+        get
+        {
+            return gems;
+        }
+        set
+        {
+            EventBus.Publish(new CurrencyUpdateEvent(CurrecyTypes.Gems, value, value - gems));
+            gems = value;
+        }
+    }
+    static int gems;
 
     public static Dictionary<ShopItemTypes, int> Inventory {
 
@@ -125,7 +139,8 @@ public class Player : MonoBehaviour
 
     public static void LoadData()
     {
-        currency = SaveManager.Load<int>("Player_Currency");
+        coins = SaveManager.Load<int>("Player_Currency_Coins");
+        gems = SaveManager.Load<int>("Player_Currency_Gems");
 
         ownedPets = SaveManager.Load<Dictionary<string, PetData>>("Player_OwnedPets");
         if (ownedPets == null)
@@ -154,8 +169,11 @@ public class Player : MonoBehaviour
     {
         Debug.Log($"PLAYER DATA SAVED @ {Time.time}");
 
-        SaveManager.Save("Player_Currency", currency);
-        currency = SaveManager.Load<int>("Player_Currency");
+        SaveManager.Save("Player_Currency_Coins", coins);
+        coins = SaveManager.Load<int>("Player_Currency_Coins");
+
+        SaveManager.Save("Player_Currency_Gems", gems);
+        gems = SaveManager.Load<int>("Player_Currency_Gems");
 
         SaveManager.Save("Player_OwnedPets", ownedPets);
         ownedPets = SaveManager.Load<Dictionary<string, PetData>>("Player_OwnedPets");

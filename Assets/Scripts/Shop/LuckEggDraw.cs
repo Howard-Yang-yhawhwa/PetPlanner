@@ -35,7 +35,7 @@ public class LuckEggDraw : MonoBehaviour
 
     public void DrawLuckyEgg()
     {
-        if (Player.Currency < Cost)
+        if (Player.Coins < Cost)
         {
             return;
         }

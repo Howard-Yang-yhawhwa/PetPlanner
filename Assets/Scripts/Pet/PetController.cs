@@ -28,6 +28,9 @@ public class PetController : MonoBehaviour
     [SerializeField] PetState currentState;
     [SerializeField] float currentStateDuration;
     [SerializeField] GameObject viewObject;
+    [SerializeField] float hungerRP;
+    [SerializeField] float happinessRP;
+    [SerializeField] float healthRP;
 
     // NavMeshAgent agent;
 
@@ -52,6 +55,18 @@ public class PetController : MonoBehaviour
     {
         selected = false;
         selection_event = EventBus.Subscribe<PetSelectedEvent>(OnSelectionMade);
+    }
+
+    private void OnEnable()
+    {
+        petAnimator.ResetAnimator();
+
+        // If the pet health is 0, play the death animation
+        if (Player.OwnedPets[ID].CurrentHealth <= 0)
+        {
+            Debug.Log($"{gameObject.name} is dead! Playing death animation.");
+            petAnimator.PlayDeathAnimation();
+        }
     }
 
     void OnSelectionMade(PetSelectedEvent e)
@@ -135,7 +150,7 @@ public class PetController : MonoBehaviour
 
         // Hunger Decay
         bool changesMade = false;
-        float hungerRP = PetManager.CalculateReductionPeriod(PetStats.Hunger, tempList[ID]);
+        hungerRP = PetManager.CalculateReductionPeriod(PetStats.Hunger, tempList[ID]);
 
         if (hungerRP != 0 && tempList[id].HungerCumulativeTime >= hungerRP)
         {
@@ -146,16 +161,13 @@ public class PetController : MonoBehaviour
                 tempList[id].HungerCumulativeTime = 0;
                 tempList[id].CurrentHunger = 0;
             }
-            else
-            {
-                tempList[id].HungerCumulativeTime -= hungerRP;
-            }
-            
+
+            tempList[id].HungerCumulativeTime -= hungerRP;
             changesMade = true;
         }
 
         // Happiness Decay
-        float happinessRP = PetManager.CalculateReductionPeriod(PetStats.Happiness, tempList[ID]);
+        happinessRP = PetManager.CalculateReductionPeriod(PetStats.Happiness, tempList[ID]);
 
         if (happinessRP != 0 && tempList[id].HappinessCumulativeTime >= happinessRP)
         {
@@ -165,16 +177,13 @@ public class PetController : MonoBehaviour
                 tempList[id].HappinessCumulativeTime = 0;
                 tempList[id].CurrentHappiness = 0;
             }
-            else
-            {
-                tempList[id].HappinessCumulativeTime -= happinessRP;
-            }
-            
+
+            tempList[id].HappinessCumulativeTime -= happinessRP;
             changesMade = true;
         }
 
         // Health Decay
-        float healthRP = PetManager.CalculateReductionPeriod(PetStats.Health, tempList[ID]);
+        healthRP = PetManager.CalculateReductionPeriod(PetStats.Health, tempList[ID]);
 
         if (healthRP != 0 && tempList[id].HealthCumulativeTime >= healthRP)
         {
@@ -183,6 +192,7 @@ public class PetController : MonoBehaviour
             {
                 tempList[id].HealthCumulativeTime = 0;
                 tempList[id].CurrentHealth = 0;
+                petAnimator.PlayDeathAnimation();
             }
             tempList[id].HealthCumulativeTime -= healthRP;
             changesMade = true;
@@ -267,7 +277,6 @@ public class PetController : MonoBehaviour
     public void PlayWithPet(float happinessValue)
     {
         petAnimator.PlayCheeringAnimation();
-        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
         Dictionary<string, PetData> tempList = Player.OwnedPets;
 
         tempList[ID].CurrentHappiness += happinessValue;
@@ -279,7 +288,6 @@ public class PetController : MonoBehaviour
     public void HealPet(float healthValue)
     {
         petAnimator.PlayCheeringAnimation();
-        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
         Dictionary<string, PetData> tempList = Player.OwnedPets;
 
         tempList[ID].CurrentHealth += healthValue;
@@ -290,7 +298,6 @@ public class PetController : MonoBehaviour
 
     public void GainExperience(float experienceValue)
     {
-        Dictionary<ShopItemTypes, int> tempInventory = Player.Inventory;
         Dictionary<string, PetData> tempList = Player.OwnedPets;
 
         tempList[ID].CurrentExperience += experienceValue;
@@ -301,6 +308,18 @@ public class PetController : MonoBehaviour
         }
 
         Player.OwnedPets = tempList;
+    }
+
+    public void RevivePet()
+    {
+        float maxHealth = dataSO.MaxHealth;
+
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+        tempList[ID].CurrentHealth = Mathf.Round( maxHealth / 2 );
+        tempList[ID].Level = Mathf.Max(1,  Mathf.RoundToInt( tempList[ID].Level / 2 ));
+        Player.OwnedPets = tempList;
+
+        petAnimator.PlayReviveAnimation();
     }
 }
 

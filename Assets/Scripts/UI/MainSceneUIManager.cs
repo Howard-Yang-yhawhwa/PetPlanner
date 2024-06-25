@@ -6,10 +6,11 @@ using TMPro;
 
 public class MainSceneUIManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text currecyText;
+    [SerializeField] TMP_Text coinsText;
+    [SerializeField] TMP_Text gemsText;
     [SerializeField] Button backButton;
     [SerializeField] GameObject ShopUI;
-    [SerializeField] GameObject InventoryUI;
+    [SerializeField] InventoryUIManager InventoryUI;
     [SerializeField] GameObject TaskUI;
     [SerializeField] GameObject PetSelectUI;
 
@@ -28,18 +29,20 @@ public class MainSceneUIManager : MonoBehaviour
 
         backButton.onClick.AddListener(CloseAllUI);
 
-        currecyText.text = $"{Player.Currency}";
+        coinsText.text = $"{Player.Coins}";
+        gemsText.text = $"{Player.Gems}";
     }
 
     private void Update()
     {
         backButton.gameObject.SetActive(TaskUI.activeSelf || ShopUI.activeSelf);
-        InventoryUI.SetActive(!TaskUI.activeSelf);
+        InventoryUI.gameObject.SetActive(!TaskUI.activeSelf);
     }
 
     void OnCurrencyUpdateEvent(CurrencyUpdateEvent e)
     {
-        currecyText.text = $"{e.newValue}";
+        coinsText.text = $"{Player.Coins}";
+        gemsText.text = $"{Player.Gems}";
     }
 
     public void CreateDebugTask()
@@ -60,27 +63,34 @@ public class MainSceneUIManager : MonoBehaviour
     public void CloseAllUI()
     {
         ShopUI.SetActive(false);
-        //InventoryUI.SetActive(false);
         TaskUI.SetActive(false);
+        InventoryUI.ShowBackground(false);
+
+        EventBus.Publish(new ChangeActionMapEvent(PlayerActionMaps.Gameplay));
     }
 
     public void TogglePetSelectUI(bool status)
     {
         PetSelectUI.SetActive(status);
+
+        EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
     public void ToggleShopUI(bool status)
     {
         ShopUI.SetActive(status);
+        InventoryUI.ShowBackground(status);
+        EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
     public void ToggleTaskUI(bool status)
     {
         TaskUI.SetActive(status);
+        EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
     public void ToggleInventoryUI(bool status)
     {
-        InventoryUI.SetActive(status);
+        InventoryUI.gameObject.SetActive(status);
     }
 }

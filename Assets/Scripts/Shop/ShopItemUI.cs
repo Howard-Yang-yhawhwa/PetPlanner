@@ -11,7 +11,8 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] Image iconBackgroundImage;
     [SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text descriptionText;
-    [SerializeField] TMP_Text costText;
+    [SerializeField] TMP_Text[] costTexts; // 0 = Real Money, 1 = Coins, 2 = Gems
+    [SerializeField] GameObject[] CurrencyTypeDisplays; // 0 = Real Money, 1 = Coins, 2 = Gems
 
     DefaultShopItemSO data;
 
@@ -27,20 +28,49 @@ public class ShopItemUI : MonoBehaviour
 
         foreach (ShopItemEffect effect in data.itemEffects)
         {
-            descriptionStr += effect.statsType.ToString() + " " + (effect.isPercentage ? $"+ {effect.value * 100}%\n" : $"+ {effect.value}\n");
+            if (effect.statsType == PetStats.Others)
+            {
+                descriptionStr += effect.overrideDesription + "\n";
+            }
+            else
+            {
+                descriptionStr += effect.statsType.ToString() + " " + (effect.isPercentage ? $"+ {effect.value * 100}%\n" : $"+ {effect.value}\n");
+            }
         }
 
         descriptionText.text = descriptionStr;
 
-        costText.text = $"$ {itemData.cost}";
+        costTexts[(int)itemData.currecyType].text = itemData.currecyType == CurrecyTypes.RealMoney ? "$" : "" + $"{itemData.cost}";
+
+        foreach(GameObject display in CurrencyTypeDisplays)
+        {
+            display.SetActive(false);
+        }
+
+        CurrencyTypeDisplays[(int)itemData.currecyType].SetActive(true);
     }
 
     public void TryBuyItem()
     {
-        if (Player.Currency >= data.cost)
-        {
-            Player.Currency -= data.cost;
-            Player.AddItem(data.type);
+        bool successful = false;
+        switch (data.currecyType) 
+        { 
+            case CurrecyTypes.Coins:
+                if (Player.Coins >= data.cost)
+                {
+                    Player.Coins -= data.cost;
+                    successful = true;
+                }
+                break;
+            case CurrecyTypes.Gems:
+                if (Player.Gems >= data.cost)
+                {
+                    Player.Gems -= data.cost;
+                    successful = true;
+                }
+                break;
         }
+
+        if (successful) Player.AddItem(data.type);
     }
 }

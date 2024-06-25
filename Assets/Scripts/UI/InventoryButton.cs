@@ -19,21 +19,11 @@ public class InventoryButton : MonoBehaviour
         dataSO = ShopManager.shopItemsMap[type];
 
         iconImage.sprite = dataSO.icon;
-
-        CheckDelete();
     }
 
-    private void Update()
+    public void UpdateAmount(int amount)
     {
-        amountText.text = $"x {Player.Inventory[type]}";
-    }
-
-    void CheckDelete()
-    {
-        if (Player.Inventory[type] <= 0)
-        {
-            Destroy(gameObject);
-        }
+        amountText.text = $"x{amount}";
     }
 
     public void OnButtonClicked()
@@ -52,41 +42,66 @@ public class InventoryButton : MonoBehaviour
             return;
         }
 
+        bool itemUsed = false;
+        int totalExpGained = 0;
+
+        // For Non-stats Related Items
+        if (type == ShopItemTypes.Revival)
+        {
+            if (petData.CurrentHealth <= 0)
+            {
+                petController.RevivePet();
+                itemUsed = true;
+            }
+        }
+
         foreach (var effects in dataSO.itemEffects)
         {
             Debug.Log($"Adding effects + {effects.value}{effects.statsType}  to {petData.Nickname}({petData.ID})");
             if(effects.statsType == PetStats.Health)
             {
                 float maxHealth = PetManager.AvaliableSOs[petData.Type].MaxHealth;
-                val = effects.isPercentage ? petData.CurrentHealth * effects.value : effects.value;
+                if (petData.CurrentHealth == maxHealth) continue; // No need to heal if health is full
+                if (petData.CurrentHealth <= 0) continue; // Cannont heal dead pet
+                val = effects.isPercentage ? maxHealth * effects.value : effects.value;
                 petController.HealPet(val);
+                itemUsed = true;
             }
 
             if (effects.statsType == PetStats.Hunger)
             {
                 float maxHunger = PetManager.AvaliableSOs[petData.Type].MaxHunger;
-                val = effects.isPercentage ? petData.CurrentHunger * effects.value : effects.value;
+                if (petData.CurrentHunger == maxHunger) continue; // No need to feed if hunger is full
+                if (petData.CurrentHealth <= 0) continue; // Cannont feed dead pet
+                val = effects.isPercentage ? maxHunger * effects.value : effects.value;
                 petController.FeedPet(val);
+                itemUsed = true;
             }
 
             if (effects.statsType == PetStats.Happiness)
             {
                 float maxHappiness = PetManager.AvaliableSOs[petData.Type].MaxHappiness;
-                val = effects.isPercentage ? petData.CurrentHappiness * effects.value : effects.value;
+                if (petData.CurrentHappiness == maxHappiness) continue; // No need to play if happiness is full
+                if (petData.CurrentHealth <= 0) continue; // Cannont play with dead pet
+                val = effects.isPercentage ? maxHappiness * effects.value : effects.value;
                 petController.PlayWithPet(val);
+                itemUsed = true;
             }
 
             if (effects.statsType == PetStats.Experience)
             {
-                val = effects.isPercentage ? petData.CurrentExperience * effects.value : effects.value;
-                petController.GainExperience(val);
+                int maxExp = PetManager.GetMaxExp(petData.Level);
+                val = effects.isPercentage ? maxExp * effects.value : effects.value;
+                totalExpGained += (int)val;
             }
         }
 
-        tempInventory[type] -= 1;
+        if (itemUsed)
+        {
+            petController.GainExperience(totalExpGained);
+            tempInventory[type] -= 1;
+            Player.Inventory = tempInventory;
+        }
 
-        Player.Inventory = tempInventory;
-
-        CheckDelete();
     }
 }

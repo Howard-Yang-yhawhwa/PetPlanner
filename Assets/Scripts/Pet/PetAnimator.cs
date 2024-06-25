@@ -11,7 +11,8 @@ public class PetAnimator : MonoBehaviour
     [SerializeField] string DeathKeyword;
     [SerializeField] string CheerKeyword;
     [SerializeField] string EatKeyword;
-    [SerializeField] string Reactkeyword;
+    [SerializeField] string ReactKeyword;
+    [SerializeField] string ReviveKeyword;
 
     Animator animator;
 
@@ -20,7 +21,7 @@ public class PetAnimator : MonoBehaviour
         this.animator = animator;
     }
 
-    void ResetAnimator()
+    public void ResetAnimator()
     {
         animator.SetInteger(IdleKeyword, 1);
         animator.SetBool(RestKeyword, false);
@@ -48,9 +49,9 @@ public class PetAnimator : MonoBehaviour
 
     public void PlayDeathAnimation()
     {
-
-       ResetAnimator();
-       animator.SetBool(DeathKeyword, true);
+        
+        ResetAnimator();
+        animator.SetTrigger(DeathKeyword);
     }
 
     public void PlayCheeringAnimation()
@@ -68,6 +69,12 @@ public class PetAnimator : MonoBehaviour
     public void PlayReactAnimation()
     {
         ResetAnimator();
-        animator.SetTrigger(Reactkeyword);
+        animator.SetTrigger(ReactKeyword);
+    }
+
+    public void PlayReviveAnimation()
+    {
+        ResetAnimator();
+        animator.SetTrigger(ReviveKeyword);
     }
 }

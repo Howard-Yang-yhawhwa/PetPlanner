@@ -103,7 +103,7 @@ public class TasksManager : MonoBehaviour
 
         if (TaskList.ContainsKey(ID))
         {
-            Player.Currency += CalcBounty(TaskList[ID]);
+            Player.Coins += CalcBounty(TaskList[ID]);
 
             Dictionary<string, Task> tempList = TaskList;
             tempList[ID].isDone = true;

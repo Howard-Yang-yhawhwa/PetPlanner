@@ -36,7 +36,7 @@ public class EggDrawConfirmationHandler : MonoBehaviour
 
     public void OnConfirmButtonClicked()
     {
-        Player.Currency -= cost;
+        Player.Coins -= cost;
         string newPetID = PetSpawner.SpawnNewPet(selectedType);
         
         // Open the egg draw result display

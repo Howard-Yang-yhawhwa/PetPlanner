@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewContainer: {fileID: 9167854953086355489}
+  growthAnimationPeriod: 1
 --- !u!114 &9167854953542640633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +126,9 @@ MonoBehaviour:
   currentState: 0
   currentStateDuration: 0
   viewObject: {fileID: 0}
+  hungerRP: 0
+  happinessRP: 0
+  healthRP: 0
 --- !u!114 &5353226188739643515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,4 +147,5 @@ MonoBehaviour:
   DeathKeyword: Death
   CheerKeyword: Cheer
   EatKeyword: Eat
-  Reactkeyword: React
+  ReactKeyword: React
+  ReviveKeyword: Revive

@@ -425,6 +425,7 @@ MonoBehaviour:
   myInputfield: {fileID: 6984239917925890633}
   myInputText: {fileID: 795820111848509367}
   myText: {fileID: 840798820067396958}
+  additionalNewlines: 0
 --- !u!1 &5945263250545080934
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +826,7 @@ GameObject:
   - component: {fileID: 8824360576686763784}
   - component: {fileID: 8494451093822760649}
   - component: {fileID: 6984239917925890633}
+  - component: {fileID: 6022124396262502489}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -1000,3 +1002,22 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &6022124396262502489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7260335563687741104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31652bfad9a2224389b1106de2a08f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalDragMinDist: 30
+  verticalDragMinDist: 8
+  mouseStartPos: {x: 0, y: 0, z: 0}
+  originalLeftPadding: 0
+  originalRightPadding: 0
+  horizontalDrag: 0
+  verticalDrag: 0

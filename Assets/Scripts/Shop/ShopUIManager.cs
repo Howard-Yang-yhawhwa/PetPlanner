@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ShopUIManager : MonoBehaviour
 {
-    [Header("General Settings")]
-    [SerializeField] TMPro.TMP_Text CurrencyText;
 
     [Header("Default Shop Stuff")]
     [SerializeField] Transform DefaultShopContainer;
@@ -22,11 +20,5 @@ public class ShopUIManager : MonoBehaviour
             clone.Setup(itemData);
             clone.transform.SetSiblingIndex(AnchorObject.transform.GetSiblingIndex() + 1);
         }
-
-        
     }
-
-
-
-
 }
