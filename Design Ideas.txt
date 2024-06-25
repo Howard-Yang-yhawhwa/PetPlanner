@@ -1,0 +1,27 @@
+1. Day and Night Cycles
+4. (HIGH) Bounty Earned Reward Page
+5. (HIGH) Update Pop-up to Look More Like Ricimi's
+6. (HIGH) Different Particle Effects for different animations
+	* Revive: shine a light in particle system that hides the jarring transition between death to idle
+7. Update Pet Stats for different dragon
+8. Chance that pet will get sick
+9. Detailed pet info panel
+	* Name
+	* Basic Stats: health, hunger, happiness, level & experience, and birthday
+	* Any side effects: sickness
+	* Note of the day (encourages the player) - also display this in the scene as though bubbles
+	* Adventure Log
+10. Mail system for rewards
+	* Daily login
+	* Pet's birthday
+	* Pet's little adventures (might find rare items)
+11. Add relationship stats for pets (better the relationship, better reward player will gain)
+12. Landing Page
+13. Island Skin Purchases
+14. Player outfits and looks
+15. (HIGH) Settings Page
+16. (HIGH) Send dragon away for money system (Gift to Caretaker - Copy Hogwarts Legacy)
+	* Can send it right away or send it once it levels up (more money)
+17. (HIGH) Sound Effects + Background Music
+18. (HIGH) Pet animation queue system + disable inventory when pet is playing animation
+20. Prettier Pet Select Panel

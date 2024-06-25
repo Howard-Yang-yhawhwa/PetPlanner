@@ -64,6 +64,13 @@ public class EggDrawResultDisplay : MonoBehaviour
 
         // Display the dragon image
         dragonImage.texture = dataSO.AnimatedIcon;
+        if (AnimatedIconsManager.Instance == null)
+        {
+            Debug.LogError($"AnimatedIconsManager is null in {gameObject.name}!");
+            return;
+        }
+        AnimatedIconsManager.Instance.DisplayAnimatedIcon(type);
+        
 
         popupManager.Open();
 
@@ -80,5 +87,11 @@ public class EggDrawResultDisplay : MonoBehaviour
         // Open name change panel with event bus
         EventBus.Publish(new OpenEditPetNameWindowEvent(currentPetID));
         popupManager.Close();
+        if (AnimatedIconsManager.Instance == null)
+        {
+            Debug.LogError($"AnimatedIconsManager is null in {gameObject.name}!");
+            return;
+        }
+        AnimatedIconsManager.Instance.HideAllAnimatedIcons();
     }
 }

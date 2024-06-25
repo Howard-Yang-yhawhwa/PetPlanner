@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CurrencyUpdateEvent
 {
+    public CurrecyTypes type;
     public int newValue;
     public int deltaValue;
 
-    public CurrencyUpdateEvent(int newValue, int deltaValue)
+    public CurrencyUpdateEvent(CurrecyTypes type, int newValue, int deltaValue)
     {
+        this.type = type;
         this.newValue = newValue;
         this.deltaValue = deltaValue;
     }
@@ -57,5 +59,15 @@ public class SetCameraScaleEvent
     public SetCameraScaleEvent(float factor)
     {
         this.factor = factor;
+    }
+}
+
+public class ChangeActionMapEvent
+{
+    public PlayerActionMaps newMap;
+
+    public ChangeActionMapEvent(PlayerActionMaps newMap)
+    {
+        this.newMap = newMap;
     }
 }

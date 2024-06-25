@@ -7,6 +7,7 @@ public class GeneralDeveloperTool : MonoBehaviour
     [SerializeField] int deltaCurrency;
     public void AddCurrency()
     {
-        Player.Currency += deltaCurrency;
+        Player.Coins += deltaCurrency;
+        Player.Gems += deltaCurrency;
     }
 }

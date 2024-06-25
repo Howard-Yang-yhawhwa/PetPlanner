@@ -1,12 +1,28 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+public enum PlayerActionMaps { UI, Gameplay }
 public class FreelookCameraTouchInput : MonoBehaviour
 {
     [SerializeField] float XAxisSensitivity = 10f;
     [SerializeField] float YAxisSensitivity = 10f;
+
+    PlayerActionMaps currentActionMap;
+
+    Subscription<ChangeActionMapEvent> change_action_map_event;
+
+    private void Awake()
+    {
+        change_action_map_event = EventBus.Subscribe<ChangeActionMapEvent>(OnActionMapChanged);
+    }
+
+    void OnActionMapChanged(ChangeActionMapEvent e)
+    {
+        currentActionMap = e.newMap;
+    }
 
     void Start()
     {
@@ -15,6 +31,12 @@ public class FreelookCameraTouchInput : MonoBehaviour
 
     float HandleAxisInputDelegate(string axisName)
     {
+        // Stop camera control if player is on UI
+        if (currentActionMap != PlayerActionMaps.Gameplay)
+        {
+            return 0f;
+        }
+
         switch (axisName)
         {
 

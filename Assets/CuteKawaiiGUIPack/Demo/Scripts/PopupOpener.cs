@@ -3,6 +3,8 @@
 // a copy of which is available at https://unity.com/legal/as-terms.
 
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Ricimi
 {
@@ -10,21 +12,24 @@ namespace Ricimi
     // given prefab and adding it to the UI canvas of the current scene.
     public class PopupOpener : MonoBehaviour
     {
-        public GameObject popupPrefab;
+        public Popup popupManager;
 
-        protected Canvas m_canvas;
-        protected GameObject m_popup;
+        Button button;
 
-        protected void Start()
+        private void Awake()
         {
-            m_canvas = GetComponentInParent<Canvas>();
+            if (TryGetComponent(out button) == false)
+            {
+                Debug.LogError($"No button found in PopupOpener ({gameObject.name})");
+                return;
+            }
+
+            button.onClick.AddListener(OpenPopup);
         }
 
         public virtual void OpenPopup()
         {
-            m_popup = Instantiate(popupPrefab, m_canvas.transform, false);
-            m_popup.SetActive(true);
-            m_popup.GetComponent<Popup>().Open();
+            popupManager.Open();
         }
     }
 }

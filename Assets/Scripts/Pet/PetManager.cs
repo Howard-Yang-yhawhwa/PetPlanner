@@ -12,7 +12,7 @@ public enum PetTypes {
                         fortune, inferno, unicorn, // Legendary
                         eclipse, eldritch, nightfury // Mythic
                      }
-public enum PetStats { Health, Hunger, Happiness, Experience }
+public enum PetStats { Health, Hunger, Happiness, Experience, Others }
 public enum PetRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 public enum PetState { Idling, Resting, Roaming, Eating, Celebrating, Death }
 
@@ -146,7 +146,7 @@ public class PetManager : MonoBehaviour
                 
                 normalRP = (templateData.MaxHappinessReductionDuration / templateData.MaxHappiness);
                 float dayNightFactor = (1 / (TimeUtils.isNighTime() ? templateData.HappinessDRF : templateData.HappinessNRF));
-                float hungerFactor = 1 / (hungerFMC * (1 - (data.CurrentHappiness / templateData.MaxHappiness)));
+                float hungerFactor = 1 / (hungerFMC * (1 - (data.CurrentHunger / templateData.MaxHunger)));
                 return normalRP * hungerFactor;
 
             default:

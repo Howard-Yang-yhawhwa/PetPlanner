@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShopItemTypes { UniversalPetFood, UniversalPetTreat, UniversalPetToy, CommonMedicine, Coins, Gems }
+public enum ShopItemTypes { UniversalPetFood, UniversalPetTreat, UniversalPetToy, CommonMedicine, Coins, Gems, Revival }
 public enum CurrecyTypes { RealMoney, Coins, Gems }
 
 [System.Serializable]
@@ -11,6 +11,7 @@ public class ShopItemEffect
     public PetStats statsType;
     public bool isPercentage;
     public float value;
+    [TextArea] public string overrideDesription;
 }
 
 public class ShopManager : MonoBehaviour

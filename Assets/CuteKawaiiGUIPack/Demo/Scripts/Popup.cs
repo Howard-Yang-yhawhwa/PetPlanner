@@ -32,6 +32,8 @@ namespace Ricimi
             if (animator == null) animator = GetComponent<Animator>();
 
             animator.SetBool("Open", true);
+
+            EventBus.Publish(new ChangeActionMapEvent( PlayerActionMaps.UI ));
         }
 
         public void Close()
@@ -41,6 +43,7 @@ namespace Ricimi
             animator.SetBool("Open", false);
 
             RemoveBackground();
+            EventBus.Publish(new ChangeActionMapEvent(PlayerActionMaps.Gameplay ));
         }
 
         // We destroy the popup automatically 0.5 seconds after closing it.
