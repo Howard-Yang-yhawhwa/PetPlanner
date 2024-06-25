@@ -14,6 +14,10 @@ public class MainSceneUIManager : MonoBehaviour
     [SerializeField] GameObject TaskUI;
     [SerializeField] GameObject PetSelectUI;
 
+    [Header("=== DEBUG INFO ===")]
+    [SerializeField] int coinsVal;
+    [SerializeField] int gemsVal;
+
     Subscription<CurrencyUpdateEvent> currency_update_event;
 
     private void Awake()
@@ -29,8 +33,12 @@ public class MainSceneUIManager : MonoBehaviour
 
         backButton.onClick.AddListener(CloseAllUI);
 
-        coinsText.text = $"{Player.Coins}";
-        gemsText.text = $"{Player.Gems}";
+        coinsVal = Player.Coins;
+        gemsVal = Player.Gems;
+
+        coinsText.text = coinsVal.ToString();
+        gemsText.text = gemsVal.ToString();
+
     }
 
     private void Update()
@@ -41,8 +49,11 @@ public class MainSceneUIManager : MonoBehaviour
 
     void OnCurrencyUpdateEvent(CurrencyUpdateEvent e)
     {
-        coinsText.text = $"{Player.Coins}";
-        gemsText.text = $"{Player.Gems}";
+        coinsVal = Player.Coins;
+        gemsVal = Player.Gems;
+
+        coinsText.text = coinsVal.ToString();
+        gemsText.text = gemsVal.ToString();
     }
 
     public void CreateDebugTask()

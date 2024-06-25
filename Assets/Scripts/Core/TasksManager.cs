@@ -81,7 +81,7 @@ public class TasksManager : MonoBehaviour
 
     public static int CalcBounty(Task task)
     {
-        int bounty = Mathf.RoundToInt((int)task.priority * GlobalConstants.BOUNTY_PIORITY_FACTOR * TimeUtils.ConvertTime(task.etdUnits, task.etdValue, TimeUnits.Second) * GlobalConstants.BOUNTY_ETD_FACTOR);
+        int bounty = Mathf.RoundToInt((int)(task.priority + 1) * GlobalConstants.BOUNTY_PIORITY_FACTOR * TimeUtils.ConvertTime(task.etdUnits, task.etdValue, TimeUnits.Second) * GlobalConstants.BOUNTY_ETD_FACTOR);
         Debug.Log($"Calculate bounty for ({task.title}) -- Task Priority = {(int)task.priority} * {GlobalConstants.BOUNTY_PIORITY_FACTOR} | Time = {TimeUtils.ConvertTime(task.etdUnits, task.etdValue, TimeUnits.Second)} * {GlobalConstants.BOUNTY_ETD_FACTOR} ---> Bounty: {bounty}");
         return bounty;
     }

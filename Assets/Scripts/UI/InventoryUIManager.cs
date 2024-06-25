@@ -40,6 +40,15 @@ public class InventoryUIManager : MonoBehaviour
             clone.Setup(itemSO.type);
             inventoryButtonMap.Add(itemSO.type, clone);
         }
+
+        foreach (DefaultShopItemSO item in ShopManager.Instance.AvaliableShopItems)
+        {
+            if (!Player.Inventory.ContainsKey(item.type))
+            {
+                Player.Inventory.Add(item.type, 0);
+            }
+        }
+
         UpdateDisplay();
     }
 

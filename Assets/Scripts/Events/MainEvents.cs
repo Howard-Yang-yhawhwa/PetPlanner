@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class CurrencyUpdateEvent
 {
-    public CurrecyTypes type;
-    public int newValue;
-    public int deltaValue;
-
-    public CurrencyUpdateEvent(CurrecyTypes type, int newValue, int deltaValue)
-    {
-        this.type = type;
-        this.newValue = newValue;
-        this.deltaValue = deltaValue;
-    }
 }
 
 public class InventoryUpdateEvent { }

@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
             return coins;
         }
         set {
-            EventBus.Publish(new CurrencyUpdateEvent(CurrecyTypes.Gems, value, value - coins));
+            EventBus.Publish(new CurrencyUpdateEvent());
             coins = value;
         }
     }
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
         }
         set
         {
-            EventBus.Publish(new CurrencyUpdateEvent(CurrecyTypes.Gems, value, value - gems));
+            EventBus.Publish(new CurrencyUpdateEvent());
             gems = value;
         }
     }
@@ -140,7 +140,10 @@ public class Player : MonoBehaviour
     public static void LoadData()
     {
         coins = SaveManager.Load<int>("Player_Currency_Coins");
+
         gems = SaveManager.Load<int>("Player_Currency_Gems");
+
+        Debug.Log($"Load coin and gem data... coin - {coins}, gem - {gems}");
 
         ownedPets = SaveManager.Load<Dictionary<string, PetData>>("Player_OwnedPets");
         if (ownedPets == null)
