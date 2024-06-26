@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.UI;
 
 public class PetStatsUI : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PetStatsUI : MonoBehaviour
     [SerializeField] TMP_Text HappinessText;
     [SerializeField] Slider ExperienceBar;
     [SerializeField] TMP_Text ExperienceText;
+    [SerializeField] Image DragonIconImage;
+    [SerializeField] RawImage AnimatedDragonIconImage;
 
     Subscription<PetSelectedEvent> selected_event;
     Subscription<PetStatsUpdateEvent> stats_update_event;
@@ -68,6 +71,9 @@ public class PetStatsUI : MonoBehaviour
         HungerText.text = $"{data.CurrentHunger} / {dataSO.MaxHunger}";
         HappinessText.text = $"{data.CurrentHappiness} / {dataSO.MaxHappiness}";
         ExperienceText.text = $"{data.CurrentExperience} / {PetManager.GetMaxExp(data.Level)}";
+        DragonIconImage.sprite = dataSO.DisplayIcon;
+        AnimatedDragonIconImage.texture = dataSO.AnimatedIcon;
+        // AnimatedIconsManager.Instance.DisplayAnimatedIcon(dataSO.Type);
 
         float healthPercent = data.CurrentHealth / dataSO.MaxHealth;
         float hungerPercent = data.CurrentHunger / dataSO.MaxHunger;

@@ -29,7 +29,7 @@ public class MainSceneUIManager : MonoBehaviour
     {
         ToggleShopUI(false);
         ToggleTaskUI(false);
-        ToggleInventoryUI(true);
+        // ToggleInventoryUI(true);
 
         backButton.onClick.AddListener(CloseAllUI);
 
@@ -44,7 +44,7 @@ public class MainSceneUIManager : MonoBehaviour
     private void Update()
     {
         backButton.gameObject.SetActive(TaskUI.activeSelf || ShopUI.activeSelf);
-        InventoryUI.gameObject.SetActive(!TaskUI.activeSelf);
+        // InventoryUI.gameObject.SetActive(!TaskUI.activeSelf);
     }
 
     void OnCurrencyUpdateEvent(CurrencyUpdateEvent e)
@@ -75,7 +75,7 @@ public class MainSceneUIManager : MonoBehaviour
     {
         ShopUI.SetActive(false);
         TaskUI.SetActive(false);
-        InventoryUI.ShowBackground(false);
+        // InventoryUI.ShowBackground(false);
 
         EventBus.Publish(new ChangeActionMapEvent(PlayerActionMaps.Gameplay));
     }
@@ -90,7 +90,7 @@ public class MainSceneUIManager : MonoBehaviour
     public void ToggleShopUI(bool status)
     {
         ShopUI.SetActive(status);
-        InventoryUI.ShowBackground(status);
+        // InventoryUI.ShowBackground(status);
         EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
