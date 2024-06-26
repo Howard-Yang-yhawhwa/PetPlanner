@@ -19,8 +19,8 @@ public class Player : MonoBehaviour
             return coins;
         }
         set {
-            EventBus.Publish(new CurrencyUpdateEvent());
             coins = value;
+            EventBus.Publish(new CurrencyUpdateEvent());
         }
     }
     static int coins;
@@ -33,8 +33,8 @@ public class Player : MonoBehaviour
         }
         set
         {
-            EventBus.Publish(new CurrencyUpdateEvent());
             gems = value;
+            EventBus.Publish(new CurrencyUpdateEvent());
         }
     }
     static int gems;

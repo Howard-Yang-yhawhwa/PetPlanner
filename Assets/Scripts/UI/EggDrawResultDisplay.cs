@@ -16,6 +16,8 @@ public class EggDrawResultDisplay : MonoBehaviour
     [SerializeField] RawImage dragonImage;
     [SerializeField] GameObject resultDisplay;
     [SerializeField] GameObject giftDisplay;
+    [SerializeField] Image RadialShineImage;
+    [SerializeField] Image RadialGlowImage;
 
     [Header("=== Rarity Colors ===")]
     [SerializeField] Color commonColor;
@@ -24,6 +26,7 @@ public class EggDrawResultDisplay : MonoBehaviour
     [SerializeField] Color epicColor;
     [SerializeField] Color legendaryColor;
     [SerializeField] Color mythicColor;
+    [SerializeField] Color[] glowRarityColors;
 
     string currentPetID;
 
@@ -45,7 +48,7 @@ public class EggDrawResultDisplay : MonoBehaviour
 
         // Set Rarity Text and Color
         rarityText.text = StringUtils.FirstCharToUpper(dataSO.Rarity.ToString());
-        rarityText.color = dataSO.Rarity switch
+        Color rarityColor = dataSO.Rarity switch
         {
             PetRarity.Common => commonColor,
             PetRarity.Uncommon => uncommonColor,
@@ -55,6 +58,7 @@ public class EggDrawResultDisplay : MonoBehaviour
             PetRarity.Mythic => mythicColor,
             _ => commonColor
         };
+        rarityText.color = rarityColor;
 
         // Check if the player has not already owned this type of dragon and show the new notification
         if (!Player.OwnedPets.Any(p => p.Value.Type == type))
@@ -70,7 +74,11 @@ public class EggDrawResultDisplay : MonoBehaviour
             return;
         }
         AnimatedIconsManager.Instance.DisplayAnimatedIcon(type);
-        
+
+        // Set Radial Glow & Shine
+        Color glowRarityColor = glowRarityColors[(int)dataSO.Rarity];
+        RadialShineImage.color = new Color(glowRarityColor.r, glowRarityColor.g, glowRarityColor.b, RadialShineImage.color.a);
+        RadialGlowImage.color = new Color(glowRarityColor.r, glowRarityColor.g, glowRarityColor.b, RadialGlowImage.color.a);
 
         popupManager.Open();
 

@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrencyUpdateEvent
-{
-}
+public class CurrencyUpdateEvent { }
 
 public class InventoryUpdateEvent { }
 
@@ -59,5 +57,15 @@ public class ChangeActionMapEvent
     public ChangeActionMapEvent(PlayerActionMaps newMap)
     {
         this.newMap = newMap;
+    }
+}
+
+public class AddBountyEvent
+{
+    public int amount;
+
+    public AddBountyEvent(int amount)
+    {
+        this.amount = amount;
     }
 }

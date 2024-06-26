@@ -20,7 +20,11 @@ MonoBehaviour:
   - statsType: 0
     isPercentage: 0
     value: 10
+    overrideDesription: 
   - statsType: 3
     isPercentage: 0
-    value: 100
+    value: 50
+    overrideDesription: 
   cost: 100
+  currecyType: 1
+  amount: 1

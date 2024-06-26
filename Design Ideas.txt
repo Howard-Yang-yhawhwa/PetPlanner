@@ -25,3 +25,6 @@
 17. (HIGH) Sound Effects + Background Music
 18. (HIGH) Pet animation queue system + disable inventory when pet is playing animation
 20. Prettier Pet Select Panel
+21. Buy things indications
+22. Custom input keyboard
+23. Auto adjust scroll view so carret is always at the middle of the screen and so you can scroll through all options even when the keyboard is up.

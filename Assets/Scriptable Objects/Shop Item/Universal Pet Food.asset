@@ -19,8 +19,12 @@ MonoBehaviour:
   itemEffects:
   - statsType: 1
     isPercentage: 0
-    value: 30
+    value: 70
+    overrideDesription: 
   - statsType: 3
     isPercentage: 0
-    value: 100
+    value: 150
+    overrideDesription: 
   cost: 100
+  currecyType: 1
+  amount: 1

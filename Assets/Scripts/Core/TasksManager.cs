@@ -103,7 +103,9 @@ public class TasksManager : MonoBehaviour
 
         if (TaskList.ContainsKey(ID))
         {
-            Player.Coins += CalcBounty(TaskList[ID]);
+            int calcedBounty = CalcBounty(TaskList[ID]);
+
+            EventBus.Publish(new AddBountyEvent(calcedBounty));
 
             Dictionary<string, Task> tempList = TaskList;
             tempList[ID].isDone = true;

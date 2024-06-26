@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIDragPassThrough : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -19,10 +20,18 @@ public class UIDragPassThrough : MonoBehaviour, IDragHandler, IBeginDragHandler,
     [SerializeField] bool horizontalDrag = false;
     [SerializeField] bool verticalDrag = false;
 
+
+    TMP_InputField inputField;
+
+    private void Start()
+    {
+        inputField = GetComponent<TMP_InputField>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         mouseStartPos = Input.mousePosition;
-
+        inputField.interactable = false;
         ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
     }
 
@@ -55,6 +64,8 @@ public class UIDragPassThrough : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
         horizontalDrag = false;
         verticalDrag = false;
+
+        inputField.interactable = true;
 
         ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.endDragHandler);
     }

@@ -17,9 +17,6 @@ public class TaskContent : MonoBehaviour
     [SerializeField] Color todoColor;
     [SerializeField] Color doneColor;
 
-    //Subscription<TodoListUpdatedEvent> todo_update_event;
-    //Subscription<DoneListUpdatedEvent> done_update_event;
-
     public string MyTaskID
     {
         get
@@ -35,27 +32,7 @@ public class TaskContent : MonoBehaviour
     }
 
     string ID;
-
-    private void Awake()
-    {
-        //todo_update_event = EventBus.Subscribe<TodoListUpdatedEvent>(OnTodoListUpdate);
-        //done_update_event = EventBus.Subscribe<DoneListUpdatedEvent>(OnDoneListUpdate);
-    }
-
-    /*
-    void OnTodoListUpdate(TodoListUpdatedEvent e)
-    {
-        
-    }
-
-    void OnDoneListUpdate(DoneListUpdatedEvent e)
-    {
-        if (e.taskRemovedID == ID)
-        {
-            InitializeDisplay();
-        }
-    }
-    */
+    bool initDoneVal;
 
     public void UpdateDisplay()
     {
@@ -64,12 +41,14 @@ public class TaskContent : MonoBehaviour
         titleText.text = task.isDone ? "<s>" + task.title : task.title;
         bountyText.text = $"{TasksManager.CalcBounty(task)}";
         toggle.interactable = !task.isDone;
+        initDoneVal = task.isDone;
+        toggle.isOn = task.isDone;
         editButton.interactable = !task.isDone;
     }
 
     public void OnToggleValueChanged(bool status)
     {
-        if (status) TasksManager.FinishedTask(ID);
+        if (status && initDoneVal != status) TasksManager.FinishedTask(ID);
     }
 
     public void OnEditButton()
