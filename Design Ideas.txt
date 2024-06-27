@@ -1,5 +1,4 @@
 1. Day and Night Cycles
-4. (HIGH) Bounty Earned Reward Page
 5. (HIGH) Update Pop-up to Look More Like Ricimi's
 6. (HIGH) Different Particle Effects for different animations
 	* Revive: shine a light in particle system that hides the jarring transition between death to idle
@@ -27,4 +26,5 @@
 20. Prettier Pet Select Panel
 21. Buy things indications
 22. Custom input keyboard
-23. Auto adjust scroll view so carret is always at the middle of the screen and so you can scroll through all options even when the keyboard is up.
+23. Auto adjust scroll view so carret is always at the middle of the screen and so you can scroll through all options even when 	the keyboard is up.
+24. Click vfx
