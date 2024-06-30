@@ -34,3 +34,14 @@ public class OpenDrawPetResultEvent
         this.petID = petID;
     }
 }
+
+public class CloseAllUIEvent {}
+public class DisplayBottomBarEvent 
+{
+    public bool shouldDisplay;
+
+    public DisplayBottomBarEvent(bool shouldDisplay)
+    {
+        this.shouldDisplay = shouldDisplay;
+    }
+}

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class BountyEarnedPopup : MonoBehaviour
 {
     [Header("=== VFX Settings ===")]
+    [SerializeField] int coinValue = 10;
     [SerializeField] GameObject UICoinsPrefab;
     [SerializeField] GameObject CoinsContainer;
     [SerializeField] Transform StartPoint;
@@ -102,7 +103,7 @@ public class BountyEarnedPopup : MonoBehaviour
         }
 
         int amountRemaining = amount;
-        int coinCount = Mathf.Min(100, Mathf.CeilToInt(amount / 50f));
+        int coinCount = Mathf.Min(100, Mathf.CeilToInt((float)amount / coinValue));
         List<GameObject> coins = new List<GameObject>();
 
         for (int i = 0; i < coinCount; i++)

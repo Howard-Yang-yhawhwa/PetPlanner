@@ -38,4 +38,7 @@ public class PetDataSO : ScriptableObject
 
     [Header("- Experience & Levels -")]
     public float MaxLevel = 100;
+
+    [Header("- Advlog -")]
+    public float giftingChance = 0.1f;
 }

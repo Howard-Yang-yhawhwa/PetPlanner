@@ -28,3 +28,4 @@
 22. Custom input keyboard
 23. Auto adjust scroll view so carret is always at the middle of the screen and so you can scroll through all options even when 	the keyboard is up.
 24. Click vfx
+25. If done time - creation time < estimated time. Recalculate bounty to use (done time - creation time) and notify the player.

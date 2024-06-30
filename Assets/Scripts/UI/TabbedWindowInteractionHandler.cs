@@ -7,8 +7,10 @@ public class TabbedWindowInteractionHandler : MonoBehaviour
 {
     [SerializeField] Toggle[] tabToggles;
     [SerializeField] GameObject[] tabContents;
+    [SerializeField] GameObject moreButtonObject;
 
     Dictionary<Toggle, int> toggleToIndex = new Dictionary<Toggle, int>();
+    int currentIndex;
 
     private void Awake()
     {
@@ -23,10 +25,21 @@ public class TabbedWindowInteractionHandler : MonoBehaviour
         SwitchTab(tabToggles[0]);
     }
 
+    public void SwitchTabByIndex(int index)
+    {
+        tabToggles[index].isOn = true;
+    }
+
     public void SwitchTab(Toggle toggle)
     {
-        if (!toggle.isOn) return;
         int tabIndex = toggleToIndex[toggle];
+
+        if (!toggle.isOn || tabContents[tabIndex].activeSelf == true) return;
+
+        currentIndex = tabIndex;
+
+        moreButtonObject.SetActive(tabIndex == 0);
+
         for (int i = 0; i < tabContents.Length; i++)
         {
             tabContents[i].SetActive(i == tabIndex);

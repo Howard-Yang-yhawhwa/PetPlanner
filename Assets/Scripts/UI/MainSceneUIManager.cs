@@ -13,16 +13,24 @@ public class MainSceneUIManager : MonoBehaviour
     [SerializeField] InventoryUIManager InventoryUI;
     [SerializeField] GameObject TaskUI;
     [SerializeField] GameObject PetSelectUI;
+    [SerializeField] GameObject[] bottomDisplays;
+    [SerializeField] TabbedWindowInteractionHandler bottomTabHandler;
+    [SerializeField] FullPetInfoDisplay petInfoDisplay;
+    
 
     [Header("=== DEBUG INFO ===")]
     [SerializeField] int coinsVal;
     [SerializeField] int gemsVal;
 
     Subscription<CurrencyUpdateEvent> currency_update_event;
+    Subscription<CloseAllUIEvent> close_all_ui_event;
+    Subscription<DisplayBottomBarEvent> close_bottom_bar_event;
 
     private void Awake()
     {
         currency_update_event = EventBus.Subscribe<CurrencyUpdateEvent>(OnCurrencyUpdateEvent);
+        close_all_ui_event = EventBus.Subscribe<CloseAllUIEvent>(e => CloseAllUI());
+        close_bottom_bar_event = EventBus.Subscribe<DisplayBottomBarEvent>(OnDisplayBottomBarEvent);
     }
 
     private void Start()
@@ -71,11 +79,27 @@ public class MainSceneUIManager : MonoBehaviour
         TasksManager.AddTask(task.ID, task);
     }
 
+    void OnDisplayBottomBarEvent(DisplayBottomBarEvent e)
+    {
+        DisplayBottomBar(e.shouldDisplay);
+    }
+
+    public void DisplayBottomBar(bool shouldDisplay)
+    {
+        foreach (GameObject display in bottomDisplays)
+        {
+            display.SetActive(shouldDisplay);
+        }
+
+        if(!shouldDisplay) petInfoDisplay.Close();
+    }
+
     public void CloseAllUI()
     {
-        ShopUI.SetActive(false);
-        TaskUI.SetActive(false);
-        // InventoryUI.ShowBackground(false);
+        if (ShopUI.activeSelf) ToggleShopUI(false);
+        if (TaskUI.activeSelf) ToggleTaskUI(false);
+
+        petInfoDisplay.Close();
 
         EventBus.Publish(new ChangeActionMapEvent(PlayerActionMaps.Gameplay));
     }
@@ -90,18 +114,31 @@ public class MainSceneUIManager : MonoBehaviour
     public void ToggleShopUI(bool status)
     {
         ShopUI.SetActive(status);
-        // InventoryUI.ShowBackground(status);
+
+        foreach(GameObject display in bottomDisplays)
+        {
+            display.SetActive(true);
+        }
+
+        bottomTabHandler.SwitchTabByIndex(status ? 1 : 0);
+
+        if (status) petInfoDisplay.Close();
+
         EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
     public void ToggleTaskUI(bool status)
     {
         TaskUI.SetActive(status);
+
+        foreach (GameObject display in bottomDisplays)
+        {
+            display.SetActive(!status);
+        }
+
+        if (status) petInfoDisplay.Close();
+
         EventBus.Publish(new ChangeActionMapEvent(status ? PlayerActionMaps.UI : PlayerActionMaps.Gameplay));
     }
 
-    public void ToggleInventoryUI(bool status)
-    {
-        InventoryUI.gameObject.SetActive(status);
-    }
 }

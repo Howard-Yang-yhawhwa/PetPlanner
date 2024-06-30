@@ -64,6 +64,11 @@ public class TimeUtils : MonoBehaviour
         return ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
     }
 
+    public static string ConvertTimestamp(long timestamp)
+    {
+        return DateTimeOffset.FromUnixTimeSeconds(timestamp).DateTime.ToString("yyyy-MM-dd HH:mm:ss");
+    }
+
     public static bool isNighTime()
     {
         var currentTime = DateTime.Now.TimeOfDay;

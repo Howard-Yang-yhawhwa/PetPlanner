@@ -33,6 +33,8 @@ public class PetManager : MonoBehaviour
 
     static int[] maxExpMemo = new int[101];
 
+    public static readonly int AdvlogPeriod = 10800; // 3 hours
+
     Subscription<PetSelectedEvent> selected_event;
 
     private void Awake()
@@ -153,6 +155,15 @@ public class PetManager : MonoBehaviour
                 return 0;
         }
     }
+    public static void AddAdvlogToPet(string petID, AdvlogData data)
+    {
+        Dictionary<string, PetData> tempList = Player.OwnedPets;
+        while (tempList[petID].myAdvlogs.Count > 15)
+        {
+            tempList[petID].myAdvlogs.RemoveAt(0);
+        }
+        tempList[petID].myAdvlogs.Add(data);
+    }
 }
 
 [System.Serializable]
@@ -166,14 +177,15 @@ public class PetData
     public float CurrentHunger;
     public float CurrentHappiness;
     public float CurrentExperience;
+    public List<AdvlogData> myAdvlogs;
 
     // Time Related Data
     public long CreationTime;
+    public long LastGeneralAdvlogTime = 0;
     public float HealthCumulativeTime;
     public float HungerCumulativeTime;
     public float HappinessCumulativeTime;
-
-    
+    public float AdvlogCumulativeTime;
 
     public PetData(PetDataSO so, string ID)
     {
@@ -189,5 +201,8 @@ public class PetData
         HealthCumulativeTime = 0;
         HungerCumulativeTime = 0;
         HappinessCumulativeTime = 0;
+        LastGeneralAdvlogTime = TimeUtils.GetTimestamp();
+
+        myAdvlogs = new List<AdvlogData>();
     }
 }

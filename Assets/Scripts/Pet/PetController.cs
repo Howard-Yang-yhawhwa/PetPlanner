@@ -23,6 +23,7 @@ public class PetController : MonoBehaviour
 
     [Space(30)]
     [Header("DEBUG INFO")]
+    [SerializeField] bool debugMode = false;
     [SerializeField] bool initialized = false;
     [SerializeField] float timer = 0;
     [SerializeField] PetState currentState;
@@ -59,6 +60,9 @@ public class PetController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!initialized) return;
+        if (petAnimator == null) petAnimator = GetComponent<PetAnimator>();
+
         petAnimator.ResetAnimator();
 
         // If the pet health is 0, play the death animation
@@ -117,9 +121,11 @@ public class PetController : MonoBehaviour
 
         Dictionary<string, PetData> tempList = Player.OwnedPets;
 
+        // Add the time since last login to the cumulative timers
         tempList[ID].HealthCumulativeTime += deltaTime;
         tempList[ID].HungerCumulativeTime += deltaTime;
         tempList[ID].HappinessCumulativeTime += deltaTime;
+        tempList[ID].AdvlogCumulativeTime += deltaTime;
 
         Player.OwnedPets = tempList;
 
@@ -132,7 +138,7 @@ public class PetController : MonoBehaviour
     {
         if (!initialized) return;
 
-        float currentTimestamp = TimeUtils.GetTimestamp();
+        long currentTimestamp = TimeUtils.GetTimestamp();
 
         timer += Time.deltaTime;
 
@@ -147,6 +153,7 @@ public class PetController : MonoBehaviour
         tempList[ID].HealthCumulativeTime = tempList[ID].CurrentHealth > 0 ? tempList[ID].HealthCumulativeTime + deltaTime : 0;
         tempList[ID].HungerCumulativeTime = tempList[ID].CurrentHunger > 0 ? tempList[ID].HungerCumulativeTime + deltaTime : 0;
         tempList[ID].HappinessCumulativeTime = tempList[ID].CurrentHappiness > 0 ? tempList[ID].HappinessCumulativeTime + deltaTime : 0;
+        tempList[ID].AdvlogCumulativeTime += deltaTime;
 
         // Hunger Decay
         bool changesMade = false;
@@ -195,6 +202,32 @@ public class PetController : MonoBehaviour
                 petAnimator.PlayDeathAnimation();
             }
             tempList[id].HealthCumulativeTime -= healthRP;
+            changesMade = true;
+        }
+
+        // Add a advlog if the timer is up
+        float advlogPeriod = debugMode ? 10 : PetManager.AdvlogPeriod;
+        if (tempList[id].AdvlogCumulativeTime >= advlogPeriod)
+        {
+            // Time Updates
+            tempList[id].AdvlogCumulativeTime -= advlogPeriod;
+            tempList[id].LastGeneralAdvlogTime += (long)advlogPeriod;
+
+            // See if this advlog should be a gift advlong
+            AdvlogCategory targetCategory = AdvlogCategory.General;
+            if (UnityEngine.Random.value <= dataSO.giftingChance)
+            {
+                targetCategory = AdvlogCategory.Gift;
+            }
+
+            AdvlogData advlogData = AdvlogManager.Instance.GetAdvlog(targetCategory, tempList[id].LastGeneralAdvlogTime, tempList[id]);
+
+            if (advlogData != null)
+            {
+                Debug.Log($"Chose a advlog (type = {targetCategory}) for {tempList[id].Nickname}!\n {advlogData}");
+                PetManager.AddAdvlogToPet(id, advlogData);
+            }
+
             changesMade = true;
         }
 

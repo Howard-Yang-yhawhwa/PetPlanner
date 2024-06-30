@@ -68,9 +68,10 @@ public class PetSpawner : MonoBehaviour
         return newData.ID;
     }
 
-
     public static PetController SpawnPet(string ID)
     {
+        FixCorruptedData(ID);
+
         PetController newPet = Instantiate(prefab, petContainer);
         newPet.transform.position = petContainer.transform.position;
         newPet.Initialize(ID);
@@ -79,6 +80,35 @@ public class PetSpawner : MonoBehaviour
         PetManager.SpawnedPets.Add(ID, newPet);
 
         return newPet;
+    }
+
+    static void FixCorruptedData(string ID)
+    {
+        if (Player.OwnedPets.ContainsKey(ID))
+        {
+            Debug.Log($"Fixing corrupted data for {ID}");
+            Dictionary<string, PetData> tempList = Player.OwnedPets;
+
+            bool valueChanged = false;
+
+            if (tempList[ID].myAdvlogs == null)
+            {
+                tempList[ID].myAdvlogs = new List<AdvlogData>();
+                valueChanged = true;
+            }
+
+            if (tempList[ID].LastGeneralAdvlogTime == 0)
+            {
+
+                tempList[ID].LastGeneralAdvlogTime = TimeUtils.GetTimestamp();
+                valueChanged = true;
+            }
+
+            if (valueChanged)
+            {
+                Player.OwnedPets = tempList;
+            }
+        }
     }
     
     public static Vector3 RandomPointInBounds(Bounds bounds)

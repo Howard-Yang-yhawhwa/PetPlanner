@@ -15,6 +15,7 @@ public class EggDrawResultHandler : MonoBehaviour
 
     void OnDrawResultEvent(OpenDrawPetResultEvent e)
     {
+        EventBus.Publish(new DisplayBottomBarEvent(false));
         display.InitAndOpen(e.petID);
     }
 }
