@@ -20,4 +20,10 @@ public class AdvlogContent : MonoBehaviour
         giftButton.gameObject.SetActive(giftList.Count > 0);
     }
 
+    public void OnGiftButtonClicked()
+    {
+        Debug.Log("Gift button clicked!");
+        EventBus.Publish(new OpenGiftRecievedPopupEvent(giftList));
+    }
+
 }

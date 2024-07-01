@@ -24,6 +24,7 @@ public class PetController : MonoBehaviour
     [Space(30)]
     [Header("DEBUG INFO")]
     [SerializeField] bool debugMode = false;
+    [SerializeField] bool allGifts = false;
     [SerializeField] bool initialized = false;
     [SerializeField] float timer = 0;
     [SerializeField] PetState currentState;
@@ -215,7 +216,8 @@ public class PetController : MonoBehaviour
 
             // See if this advlog should be a gift advlong
             AdvlogCategory targetCategory = AdvlogCategory.General;
-            if (UnityEngine.Random.value <= dataSO.giftingChance)
+            float giftingChance = debugMode && allGifts ? 1 : dataSO.giftingChance;
+            if (UnityEngine.Random.value <= giftingChance)
             {
                 targetCategory = AdvlogCategory.Gift;
             }

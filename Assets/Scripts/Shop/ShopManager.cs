@@ -20,6 +20,10 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] public List<DefaultShopItemSO> AvaliableShopItems;
 
+    [Header("=== Global Visuals ===")]
+    public Sprite coinsIcon;
+    public Sprite gemsIcon;
+
     public static Dictionary<ShopItemTypes, DefaultShopItemSO> shopItemsMap = new Dictionary<ShopItemTypes, DefaultShopItemSO>();
 
     private void Awake()

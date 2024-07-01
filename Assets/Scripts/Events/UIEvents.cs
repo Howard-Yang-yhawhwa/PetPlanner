@@ -7,11 +7,13 @@ public class OpenEggDrawConfirmaationEvent
 {
     public PetTypes selectedType;
     public int cost;
+    public Sprite eggDrawSprite;
 
-    public OpenEggDrawConfirmaationEvent(PetTypes selectedType, int cost)
+    public OpenEggDrawConfirmaationEvent(PetTypes selectedType, int cost, Sprite eggDrawSprite)
     {
         this.selectedType = selectedType;
         this.cost = cost;
+        this.eggDrawSprite = eggDrawSprite;
     }
 }
 
@@ -28,10 +30,21 @@ public class OpenEditPetNameWindowEvent
 public class OpenDrawPetResultEvent
 {
     public string petID;
-
-    public OpenDrawPetResultEvent(string petID)
+    public Sprite eggDrawSprite;
+    public OpenDrawPetResultEvent(string petID, Sprite eggDrawSprite)
     {
         this.petID = petID;
+        this.eggDrawSprite = eggDrawSprite;
+    }
+}
+
+public class OpenGiftRecievedPopupEvent
+{
+    public List<GiftData> gifts;
+
+    public OpenGiftRecievedPopupEvent(List<GiftData> gifts)
+    {
+        this.gifts = gifts;
     }
 }
 

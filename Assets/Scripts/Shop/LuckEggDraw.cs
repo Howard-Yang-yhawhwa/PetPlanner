@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LuckEggDraw : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] int Cost;
+    [SerializeField] Sprite eggDrawSprite;
 
+    [Header("=== UI References ===")]
+    [SerializeField] Image eggDrawIconImage;
+    
     [Space(20)]
     [Header("Probablities")]
     [SerializeField] float UncommonProbability;
@@ -19,7 +24,9 @@ public class LuckEggDraw : MonoBehaviour
 
     private void Start()
     {
-        foreach(var kvp in PetManager.AvaliableSOs)
+        eggDrawIconImage.sprite = eggDrawSprite;
+
+        foreach (var kvp in PetManager.AvaliableSOs)
         {
             PetTypes type = kvp.Key;
             PetDataSO dataSO = kvp.Value;
@@ -46,39 +53,39 @@ public class LuckEggDraw : MonoBehaviour
         if (rand < MythicProbability && petOptions.ContainsKey(PetRarity.Mythic))
         {
             selectedType = DrawPet(PetRarity.Mythic);
-            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
             return;
         }
 
         if (rand < LegendProbability && petOptions.ContainsKey(PetRarity.Legendary))
         {
             selectedType = DrawPet(PetRarity.Legendary);
-            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
             return;
         }
 
         if (rand < EpicProbability && petOptions.ContainsKey(PetRarity.Epic))
         {
             selectedType = DrawPet(PetRarity.Epic);
-            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
             return;
         }
 
         if (rand < RareProbability && petOptions.ContainsKey(PetRarity.Rare))
         {
             selectedType = DrawPet(PetRarity.Rare);
-            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
             return;
         }
 
         if (rand < UncommonProbability && petOptions.ContainsKey(PetRarity.Uncommon))
         {
             selectedType = DrawPet(PetRarity.Uncommon);
-            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+            EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
             return;
         }
 
-        EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost));
+        EventBus.Publish(new OpenEggDrawConfirmaationEvent(selectedType, Cost, eggDrawSprite));
         return;
 
     }

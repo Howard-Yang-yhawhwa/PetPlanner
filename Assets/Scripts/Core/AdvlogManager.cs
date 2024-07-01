@@ -42,11 +42,13 @@ public class AdvlogData
 {
     public string SOName;
     public string timestamp;
+    public bool giftClaimed = false;
 
     public AdvlogData(string SOName, string timestamp)
     {
         this.SOName = SOName;
         this.timestamp = timestamp;
+        this.giftClaimed = false;
     }
 
     public override string ToString()

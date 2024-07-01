@@ -18,6 +18,7 @@ public class EggDrawResultDisplay : MonoBehaviour
     [SerializeField] GameObject giftDisplay;
     [SerializeField] Image RadialShineImage;
     [SerializeField] Image RadialGlowImage;
+    [SerializeField] Image EggDrawIcon;
 
     [Header("=== Rarity Colors ===")]
     [SerializeField] Color commonColor;
@@ -29,10 +30,19 @@ public class EggDrawResultDisplay : MonoBehaviour
     [SerializeField] Color[] glowRarityColors;
 
     string currentPetID;
+    EggRevealShineEffect shineEffectManager;
 
-    public void InitAndOpen(string petID)
+    public void InitAndOpen(string petID, Sprite eggDrawSprite)
     {
         Debug.Log("Egg Draw Result Display Init and Open Called!");
+
+        shineEffectManager = GetComponent<EggRevealShineEffect>();
+
+        if (shineEffectManager == null)
+        {
+            Debug.LogError($"Shine Effect Manager is null in {gameObject.name}!");
+            return;
+        }
 
         giftDisplay.SetActive(true);
         resultDisplay.SetActive(false);
@@ -80,14 +90,16 @@ public class EggDrawResultDisplay : MonoBehaviour
         RadialShineImage.color = new Color(glowRarityColor.r, glowRarityColor.g, glowRarityColor.b, RadialShineImage.color.a);
         RadialGlowImage.color = new Color(glowRarityColor.r, glowRarityColor.g, glowRarityColor.b, RadialGlowImage.color.a);
 
+        // Set Egg Draw Icon
+        EggDrawIcon.sprite = eggDrawSprite;
+
         popupManager.Open();
 
     }
 
     public void ShowResult()
     {
-        resultDisplay.SetActive(true);
-        giftDisplay.SetActive(false);
+        shineEffectManager.PlayAnimation();
     }
 
     public void ConfirmResult()

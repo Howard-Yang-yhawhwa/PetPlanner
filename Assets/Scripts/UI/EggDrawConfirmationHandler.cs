@@ -11,6 +11,7 @@ public class EggDrawConfirmationHandler : MonoBehaviour
 
     private PetTypes selectedType;
     private int cost;
+    private Sprite currentEggDrawSprite;
 
     Subscription<OpenEggDrawConfirmaationEvent> egg_draw_event;
 
@@ -21,13 +22,14 @@ public class EggDrawConfirmationHandler : MonoBehaviour
 
     void OnEggDrawEvent(OpenEggDrawConfirmaationEvent e)
     {
-        SetupPanel(e.selectedType, e.cost);
+        SetupPanel(e.selectedType, e.cost, e.eggDrawSprite);
     }
 
-    public void SetupPanel(PetTypes type, int cost)
+    public void SetupPanel(PetTypes type, int cost, Sprite eggDrawSprite)
     {
         selectedType = type;
         this.cost = cost;
+        currentEggDrawSprite = eggDrawSprite;
 
         costText.text = cost.ToString();
 
@@ -40,7 +42,7 @@ public class EggDrawConfirmationHandler : MonoBehaviour
         string newPetID = PetSpawner.SpawnNewPet(selectedType);
         
         // Open the egg draw result display
-        EventBus.Publish(new OpenDrawPetResultEvent(newPetID));
+        EventBus.Publish(new OpenDrawPetResultEvent(newPetID, currentEggDrawSprite));
 
         // TODO: Show lucky egg draw animation
         // TODO: Show naming panel after the egg draw animation
